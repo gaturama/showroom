@@ -4,6 +4,7 @@ import { styles } from "../styles/stylesLogin";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { useFocusEffect } from "@react-navigation/native";
+import CustomAlert from "../components/CustomAlert";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
@@ -16,6 +17,8 @@ export default function LoginScreen({ navigation }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useFocusEffect(
     useCallback(() => {
@@ -36,12 +39,18 @@ export default function LoginScreen({ navigation }: Props) {
     if (user) {
       navigation.navigate("Home");
     } else {
-      alert("Email ou senhas incorretos!");
+      setAlertMessage("Email ou senhas incorretos!");
+      setAlertVisible(true);
     }
   };
 
   const handleRegister = () => {
     navigation.navigate("Register");
+  };
+
+  const closeAlert = () => {
+    setAlertVisible(false);
+    setAlertMessage("");
   };
 
   return (
@@ -88,6 +97,13 @@ export default function LoginScreen({ navigation }: Props) {
       <TouchableOpacity onPress={handleRegister}>
         <Text style={styles.textCadastro}>Cadastre-se</Text>
       </TouchableOpacity>
+
+      <CustomAlert
+        isVisible={alertVisible}
+        title="Erro de Login"
+        message={alertMessage}
+        onClose={closeAlert}
+      />
     </View>
   );
 }

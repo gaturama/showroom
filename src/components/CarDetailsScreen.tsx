@@ -1,15 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
-import { Appbar, Chip } from "react-native-paper";
+import { Appbar } from "react-native-paper";
 import { CarImageCarousel } from "../components/CarCarousel";
 import { styles } from "../styles/stylesCarDetails";
 import { Ionicons } from "@expo/vector-icons";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CarDetails">;
-
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function CarDetailsScreen({ navigation, route }: Props) {
   const { car } = route.params;

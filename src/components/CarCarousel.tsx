@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Image, Dimensions, ScrollView } from 'react-native';
+import { styles } from '../styles/stylesCarCarousel';
 
 interface CarImageCarouselProps {
   images: string[];
@@ -7,7 +8,7 @@ interface CarImageCarouselProps {
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const CARD_MARGIN = 32; // margins do card (16 * 2)
+const CARD_MARGIN = 32; 
 const IMAGE_WIDTH = SCREEN_WIDTH - CARD_MARGIN;
 
 export const CarImageCarousel: React.FC<CarImageCarouselProps> = ({ 
@@ -42,7 +43,6 @@ export const CarImageCarousel: React.FC<CarImageCarouselProps> = ({
         ))}
       </ScrollView>
 
-      {/* Indicadores de página */}
       <View style={styles.pagination}>
         {images.map((_, index) => (
           <View
@@ -57,34 +57,3 @@ export const CarImageCarousel: React.FC<CarImageCarouselProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'relative',
-  },
-  image: {
-    backgroundColor: '#1a1a1a',
-  },
-  pagination: {
-    position: 'absolute',
-    bottom: 12,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    marginHorizontal: 4,
-  },
-  dotActive: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#fff',
-  },
-});
