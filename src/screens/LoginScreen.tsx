@@ -7,6 +7,11 @@ import { useFocusEffect } from "@react-navigation/native";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
+const users = [
+  { id: 1, email: "teste@email.com", password: 1234 },
+  { id: 2, email: "email@gmail.com", password: 234 },
+];
+
 export default function LoginScreen({ navigation }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +29,15 @@ export default function LoginScreen({ navigation }: Props) {
   };
 
   const handleLogin = () => {
-    navigation.navigate("Home");
+    const user = users.find(
+      (u) => u.email === email && u.password.toString() === password
+    );
+
+    if (user) {
+      navigation.navigate("Home");
+    } else {
+      alert("Email ou senhas incorretos!");
+    }
   };
 
   const handleRegister = () => {
