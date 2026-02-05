@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#121212",
   },
 
-  // Header Glass
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -43,7 +42,6 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // Background Particles
   backgroundParticles: {
     position: "absolute",
     width: "100%",
@@ -95,20 +93,17 @@ export const styles = StyleSheet.create({
     elevation: 9,
   },
 
-  // Scroll Content
   scrollContent: {
     flexGrow: 1,
     paddingBottom: 40,
   },
 
-  // Content
   contentContainer: {
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 30,
   },
 
-  // Avatar Section
   avatarContainer: {
     alignItems: "center",
     marginBottom: 12,
@@ -162,7 +157,6 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  // Glass Card
   glassCard: {
     width: "100%",
     backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -180,7 +174,6 @@ export const styles = StyleSheet.create({
     elevation: 15,
   },
 
-  // Input Container
   inputContainer: {
     marginBottom: 20,
   },
@@ -224,7 +217,6 @@ export const styles = StyleSheet.create({
     right: 12,
   },
 
-  // Button
   button: {
     backgroundColor: "#DC143C",
     paddingVertical: 18,
@@ -251,7 +243,6 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // Options Container
   optionsContainer: {
     marginTop: 28,
     paddingTop: 20,
@@ -274,7 +265,6 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  // Logout Button
   logoutButton: {
     flexDirection: "row",
     alignItems: "center",

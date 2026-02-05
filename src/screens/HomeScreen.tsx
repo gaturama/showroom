@@ -1,11 +1,18 @@
+import React, { useEffect, useRef } from "react";
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  Animated,
+  StatusBar,
+} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, FlatList } from "react-native";
 import { RootStackParamList } from "../navigation/types";
-import { Appbar } from "react-native-paper";
 import { styles } from "../styles/stylesHome";
 import { CarCard } from "../components/CarCard";
 import { Car } from "../navigation/car";
-import { styles as ProfileStyles } from "../styles/stylesProfile";
+import { Ionicons } from "@expo/vector-icons";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -133,6 +140,25 @@ const MOCK_CARS: Car[] = [
 ];
 
 export default function HomeScreen({ navigation }: Props) {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(-20)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.spring(slideAnim, {
+        toValue: 0,
+        tension: 20,
+        friction: 7,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
   const handleProfile = () => {
     navigation.navigate("Profile");
   };
@@ -143,12 +169,78 @@ export default function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header style={ProfileStyles.head}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} color="#fff" />
-        <Appbar.Content title="Garagem" color="#fff" />
-        <Appbar.Action icon="account" onPress={handleProfile} color="#fff" />
-      </Appbar.Header>
+      <StatusBar barStyle="light-content" backgroundColor="#DC143C" />
 
+      {/* Background Particles */}
+      <View style={styles.backgroundParticles}>
+        <Animated.View style={[styles.particle, styles.particle1]} />
+        <Animated.View style={[styles.particle, styles.particle2]} />
+        <Animated.View style={[styles.particle, styles.particle3]} />
+      </View>
+
+      {/* Header Glass */}
+      <Animated.View
+        style={[
+          styles.header,
+          {
+            opacity: fadeAnim,
+            transform: [{ translateY: slideAnim }],
+          },
+        ]}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.headerButton}
+        >
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+
+        <View style={styles.headerCenter}>
+          <Ionicons
+            name="car-sport"
+            size={24}
+            color="#fff"
+            style={{ marginRight: 8 }}
+          />
+          <Text style={styles.headerTitle}>Garagem Premium</Text>
+        </View>
+
+        <TouchableOpacity onPress={handleProfile} style={styles.headerButton}>
+          <Ionicons name="person-circle" size={28} color="#fff" />
+        </TouchableOpacity>
+      </Animated.View>
+
+      {/* Stats Bar */}
+      <Animated.View
+        style={[
+          styles.statsBar,
+          {
+            opacity: fadeAnim,
+            transform: [{ translateY: slideAnim }],
+          },
+        ]}
+      >
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>{MOCK_CARS.length}</Text>
+          <Text style={styles.statLabel}>Carros</Text>
+        </View>
+        <View style={styles.statDivider} />
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>
+            {MOCK_CARS.reduce((acc, car) => acc + car.horsepower, 0)}
+          </Text>
+          <Text style={styles.statLabel}>HP Total</Text>
+        </View>
+        <View style={styles.statDivider} />
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>
+            R$ {(MOCK_CARS.reduce((acc, car) => acc + car.price, 0) / 1000000).toFixed(1)}M
+          </Text>
+          <Text style={styles.statLabel}>Valor</Text>
+        </View>
+      </Animated.View>
+
+      {/* Car List */}
       <FlatList
         data={MOCK_CARS}
         keyExtractor={(item) => item.id}
