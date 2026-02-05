@@ -1,5 +1,13 @@
-import { useCallback, useState } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useCallback, useState } from "react";
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Animated,
+  StatusBar,
+} from "react-native";
 import { styles } from "../styles/stylesLogin";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
@@ -20,11 +28,31 @@ export default function LoginScreen({ navigation }: Props) {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
+  const fadeAnim = React.useRef(new Animated.Value(0)).current;
+  const slideAnim = React.useRef(new Animated.Value(30)).current;
+
   useFocusEffect(
     useCallback(() => {
       setEmail("");
       setPassword("");
-    }, [])
+
+      fadeAnim.setValue(0);
+      slideAnim.setValue(30);
+
+      Animated.parallel([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.spring(slideAnim, {
+          toValue: 0,
+          tension: 20,
+          friction: 7,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }, []),
   );
 
   const toggleShowPassword = () => {
@@ -33,7 +61,7 @@ export default function LoginScreen({ navigation }: Props) {
 
   const handleLogin = () => {
     const user = users.find(
-      (u) => u.email === email && u.password.toString() === password
+      (u) => u.email === email && u.password.toString() === password,
     );
 
     if (user) {
@@ -54,49 +82,105 @@ export default function LoginScreen({ navigation }: Props) {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: "#121212" }]}>
-      <Image source={require("../assets/jms_logo.png")} style={styles.image} />
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#121212" />
 
-      <TextInput
-        autoCorrect={false}
-        autoCapitalize="none"
-        placeholder="Email"
-        placeholderTextColor={"#fff"}
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
+      <View style={styles.backgroundParticles}>
+        <Animated.View style={[styles.particle, styles.particle1]} />
+        <Animated.View style={[styles.particle, styles.particle2]} />
+        <Animated.View style={[styles.particle, styles.particle3]} />
+      </View>
 
-      <TextInput
-        autoCorrect={false}
-        autoCapitalize="none"
-        secureTextEntry={!showPassword}
-        placeholder="Password"
-        placeholderTextColor={"#fff"}
-        keyboardType="numeric"
-        value={password}
-        onChangeText={setPassword}
-        style={styles.input}
-      />
+      <Animated.View
+        style={[
+          styles.contentContainer,
+          {
+            opacity: fadeAnim,
+            transform: [{ translateY: slideAnim }],
+          },
+        ]}
+      >
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../assets/jms_logo.png")}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
 
-      <TouchableOpacity onPress={toggleShowPassword} style={styles.icon}>
-        <Image
-          source={
-            showPassword
-              ? require("../assets/ic_eye_closed.png")
-              : require("../assets/ic_eye.png")
-          }
-        />
-      </TouchableOpacity>
+        <View style={styles.glassCard}>
+          {/* Email Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholder="seu@email.com"
+              placeholderTextColor="rgba(255, 255, 255, 0.4)"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+              style={styles.input}
+            />
+          </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+          {/* Password Input */}
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>Senha</Text>
+            <View style={styles.passwordContainer}>
+              <TextInput
+                autoCorrect={false}
+                autoCapitalize="none"
+                secureTextEntry={!showPassword}
+                placeholder="••••••••"
+                placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                value={password}
+                onChangeText={setPassword}
+                style={[styles.input, styles.passwordInput]}
+              />
+              <TouchableOpacity
+                onPress={toggleShowPassword}
+                style={styles.eyeIcon}
+              >
+                <Image
+                  source={
+                    showPassword
+                      ? require("../assets/ic_eye_closed.png")
+                      : require("../assets/ic_eye.png")
+                  }
+                  style={styles.eyeImage}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
 
-      <TouchableOpacity onPress={handleRegister}>
-        <Text style={styles.textCadastro}>Cadastre-se</Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleLogin}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
+
+          <View style={styles.divider}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>ou</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          <TouchableOpacity
+            onPress={handleRegister}
+            style={styles.registerLink}
+          >
+            <Text style={styles.textCadastro}>
+              Não tem conta?{" "}
+              <Text style={styles.textCadastroStrong}>Cadastre-se</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.footerText}>JMS Car Showroom © 2024</Text>
+      </Animated.View>
 
       <CustomAlert
         isVisible={alertVisible}
