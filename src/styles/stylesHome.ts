@@ -87,6 +87,7 @@ export const styles = StyleSheet.create({
   },
 
   headerCenter: {
+    marginLeft: 60,
     flexDirection: "row",
     alignItems: "center",
   },

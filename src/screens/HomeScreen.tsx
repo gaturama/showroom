@@ -153,7 +153,8 @@ const MOCK_CARS: Car[] = [
     acceleration: "4s",
     weight: 2295,
     price: 2000000,
-    description: "O Bentley Continental GT V8 é a definição de luxo com alma esportiva. Debaixo do capô, o motor V8 biturbo entrega potência e torque de sobra, garantindo acelerações fortes e um ronco marcante — tudo isso sem abrir mão da suavidade característica da Bentley.",
+    description:
+      "O Bentley Continental GT V8 é a definição de luxo com alma esportiva. Debaixo do capô, o motor V8 biturbo entrega potência e torque de sobra, garantindo acelerações fortes e um ronco marcante — tudo isso sem abrir mão da suavidade característica da Bentley.",
     images: [
       require("../assets/bentley_frontSide.jpg"),
       require("../assets/bentley_back.jpg"),
@@ -176,14 +177,15 @@ const MOCK_CARS: Car[] = [
     acceleration: "2,8s",
     weight: 1420,
     price: 30000000,
-    description: "O Koenigsegg Regera é o ápice da engenharia automotiva moderna — um hipercarro híbrido sueco que redefine o que significa desempenho sem concessões. Com um sistema híbrido inovador combinando um motor V8 twin-turbo de alta potência com motores elétricos integrados, o Regera entrega uma aceleração brutal, torque instantâneo e tecnologia de transmissão direta que elimina a necessidade de uma caixa de câmbio tradicional.",
+    description:
+      "O Koenigsegg Regera é o ápice da engenharia automotiva moderna — um hipercarro híbrido sueco que redefine o que significa desempenho sem concessões. Com um sistema híbrido inovador combinando um motor V8 twin-turbo de alta potência com motores elétricos integrados, o Regera entrega uma aceleração brutal, torque instantâneo e tecnologia de transmissão direta que elimina a necessidade de uma caixa de câmbio tradicional.",
     images: [
       require("../assets/koenigsegg_regera_back.jpg"),
       require("../assets/koenigsegg_regera_front.jpg"),
       require("../assets/koenigsegg_regera_side.jpg"),
     ],
   },
-   {
+  {
     id: "8",
     name: "BMW M3 Competition",
     brand: "BMW",
@@ -199,7 +201,8 @@ const MOCK_CARS: Car[] = [
     acceleration: "3,9s",
     weight: 1730,
     price: 6022030,
-    description: "O BMW M3 Competition é a síntese perfeita entre desempenho bruto e usabilidade diária. Com um motor twin-turbo de 6 cilindros em linha que entrega uma potência vigorosa e um som inconfundível, essa versão Competition eleva o M3 a um patamar ainda mais esportivo — resposta instantânea do acelerador, aceleração feroz e controle preciso em qualquer curva.",
+    description:
+      "O BMW M3 Competition é a síntese perfeita entre desempenho bruto e usabilidade diária. Com um motor twin-turbo de 6 cilindros em linha que entrega uma potência vigorosa e um som inconfundível, essa versão Competition eleva o M3 a um patamar ainda mais esportivo — resposta instantânea do acelerador, aceleração feroz e controle preciso em qualquer curva.",
     images: [
       require("../assets/bmw_m3_frontSide.jpg"),
       require("../assets/bmw_m3_back.jpg"),
@@ -222,7 +225,8 @@ const MOCK_CARS: Car[] = [
     acceleration: "2,8s",
     weight: 1198,
     price: 14000000,
-    description: "O McLaren Senna é a mais pura expressão da obsessão pela performance — um hipercarro projetado para dominar pistas, inspirado no lendário piloto Ayrton Senna. Com um motor V8 biturbo de alta rotação e uma relação peso-potência impressionante, ele entrega aceleração visceral, respostas instantâneas e performance cirúrgica em cada curva.",
+    description:
+      "O McLaren Senna é a mais pura expressão da obsessão pela performance — um hipercarro projetado para dominar pistas, inspirado no lendário piloto Ayrton Senna. Com um motor V8 biturbo de alta rotação e uma relação peso-potência impressionante, ele entrega aceleração visceral, respostas instantâneas e performance cirúrgica em cada curva.",
     images: [
       require("../assets/mcLaren_Senna_front.jpg"),
       require("../assets/mcLaren_Senna_side.jpg"),
@@ -278,13 +282,6 @@ export default function HomeScreen({ navigation }: Props) {
           },
         ]}
       >
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.headerButton}
-        >
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-
         <View style={styles.headerCenter}>
           <Ionicons
             name="car-sport"
@@ -299,10 +296,11 @@ export default function HomeScreen({ navigation }: Props) {
           <Ionicons name="person-circle" size={28} color="#fff" />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("Favorites")}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Favorites")}
           style={styles.headerButton}
-          >
-            <Ionicons name="heart" size={24} color="#fff"/>
+        >
+          <Ionicons name="heart" size={24} color="#fff" />
         </TouchableOpacity>
       </Animated.View>
 
@@ -330,7 +328,11 @@ export default function HomeScreen({ navigation }: Props) {
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
           <Text style={styles.statNumber}>
-            R$ {(MOCK_CARS.reduce((acc, car) => acc + car.price, 0) / 1000000).toFixed(1)}M
+            R${" "}
+            {(
+              MOCK_CARS.reduce((acc, car) => acc + car.price, 0) / 1000000
+            ).toFixed(1)}
+            M
           </Text>
           <Text style={styles.statLabel}>Valor</Text>
         </View>

@@ -7,26 +7,27 @@ import {
   View,
   Animated,
   StatusBar,
+  ActivityIndicator,
 } from "react-native";
-import { styles } from "../styles/stylesLogin";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { useFocusEffect } from "@react-navigation/native";
 import CustomAlert from "../components/CustomAlert";
+import { styles } from "../styles/stylesLogin";
+import { useAuth } from "../context/AuthContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
-
-const users = [
-  { id: 1, email: "teste@email.com", password: 1234 },
-  { id: 2, email: "email@gmail.com", password: 234 },
-];
 
 export default function LoginScreen({ navigation }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { login } = useAuth();
 
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
   const slideAnim = React.useRef(new Animated.Value(30)).current;
@@ -59,16 +60,35 @@ export default function LoginScreen({ navigation }: Props) {
     setShowPassword((prev) => !prev);
   };
 
-  const handleLogin = () => {
-    const user = users.find(
-      (u) => u.email === email && u.password.toString() === password,
-    );
-
-    if (user) {
-      navigation.navigate("Home");
-    } else {
-      setAlertMessage("Email ou senhas incorretos!");
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setAlertTitle("Campos Incompletos");
+      setAlertMessage("Por favor, preencha email e senha.");
       setAlertVisible(true);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const result = await login(email, password);
+
+      if (result.success) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        });
+      } else {
+        setAlertTitle("Erro de Login");
+        setAlertMessage(result.message);
+        setAlertVisible(true);
+      }
+    } catch (error) {
+      setAlertTitle("Erro");
+      setAlertMessage("Ocorreu um erro ao fazer login. Tente novamente.");
+      setAlertVisible(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -78,6 +98,7 @@ export default function LoginScreen({ navigation }: Props) {
 
   const closeAlert = () => {
     setAlertVisible(false);
+    setAlertTitle("");
     setAlertMessage("");
   };
 
@@ -109,7 +130,6 @@ export default function LoginScreen({ navigation }: Props) {
         </View>
 
         <View style={styles.glassCard}>
-          {/* Email Input */}
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
@@ -121,10 +141,10 @@ export default function LoginScreen({ navigation }: Props) {
               value={email}
               onChangeText={setEmail}
               style={styles.input}
+              editable={!isLoading}
             />
           </View>
 
-          {/* Password Input */}
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Senha</Text>
             <View style={styles.passwordContainer}>
@@ -137,10 +157,12 @@ export default function LoginScreen({ navigation }: Props) {
                 value={password}
                 onChangeText={setPassword}
                 style={[styles.input, styles.passwordInput]}
+                editable={!isLoading}
               />
               <TouchableOpacity
                 onPress={toggleShowPassword}
                 style={styles.eyeIcon}
+                disabled={isLoading}
               >
                 <Image
                   source={
@@ -155,11 +177,16 @@ export default function LoginScreen({ navigation }: Props) {
           </View>
 
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, isLoading && { opacity: 0.7 }]}
             onPress={handleLogin}
             activeOpacity={0.8}
+            disabled={isLoading}
           >
-            <Text style={styles.buttonText}>Entrar</Text>
+            {isLoading ? (
+              <ActivityIndicator color="#fff" size="small" />
+            ) : (
+              <Text style={styles.buttonText}>Entrar</Text>
+            )}
           </TouchableOpacity>
 
           <View style={styles.divider}>
@@ -171,6 +198,7 @@ export default function LoginScreen({ navigation }: Props) {
           <TouchableOpacity
             onPress={handleRegister}
             style={styles.registerLink}
+            disabled={isLoading}
           >
             <Text style={styles.textCadastro}>
               Não tem conta?{" "}
@@ -179,12 +207,12 @@ export default function LoginScreen({ navigation }: Props) {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.footerText}>JMS Automotiva © 2026</Text>
+        <Text style={styles.footerText}>JMS Car Showroom © 2026</Text>
       </Animated.View>
 
       <CustomAlert
         isVisible={alertVisible}
-        title="Erro de Login"
+        title={alertTitle}
         message={alertMessage}
         onClose={closeAlert}
       />

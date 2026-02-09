@@ -124,7 +124,6 @@ export default function FavoritesScreen({ navigation }: Props) {
         </TouchableOpacity>
       </Animated.View>
 
-      {/* Stats Bar */}
       {favorites.length > 0 && (
         <Animated.View
           style={[
@@ -165,7 +164,6 @@ export default function FavoritesScreen({ navigation }: Props) {
         </Animated.View>
       )}
 
-      {/* Car List or Empty State */}
       {favorites.length === 0 ? (
         renderEmptyState()
       ) : (

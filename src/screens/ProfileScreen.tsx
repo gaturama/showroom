@@ -9,27 +9,30 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Image,
+  ActivityIndicator,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { styles } from "../styles/stylesProfile";
 import { Ionicons } from "@expo/vector-icons";
 import CustomAlert from "../components/CustomAlert";
+import { useAuth } from "../context/AuthContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
 export default function ProfileScreen({ navigation }: Props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const { currentUser, updateUser, logout } = useAuth();
+
+  const [name, setName] = useState(currentUser?.name || "");
+  const [email, setEmail] = useState(currentUser?.email || "");
+  const [phone, setPhone] = useState(currentUser?.phone || "");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Animações
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
@@ -56,17 +59,68 @@ export default function ProfileScreen({ navigation }: Props) {
     ]).start();
   }, []);
 
-  const handleEdit = () => {
-    if (!name || !email || !password || !phone) {
+  useEffect(() => {
+    if (currentUser) {
+      setName(currentUser.name);
+      setEmail(currentUser.email);
+      setPhone(currentUser.phone);
+    }
+  }, [currentUser]);
+
+  const handleEdit = async () => {
+    if (!name || !email || !phone) {
       setAlertTitle("Campos Incompletos");
-      setAlertMessage("Preencha todos os campos antes de salvar!");
+      setAlertMessage("Por favor, preencha nome, email e telefone.");
       setAlertVisible(true);
       return;
     }
 
-    setAlertTitle("Sucesso!");
-    setAlertMessage("Informações atualizadas com sucesso!");
-    setAlertVisible(true);
+    setIsLoading(true);
+
+    try {
+      const updateData: any = {
+        name,
+        email,
+        phone,
+      };
+      if (password) {
+        if (password.length < 4) {
+          setAlertTitle("Senha Fraca");
+          setAlertMessage("A senha deve ter no mínimo 4 caracteres.");
+          setAlertVisible(true);
+          setIsLoading(false);
+          return;
+        }
+        updateData.password = password;
+      }
+
+      const result = await updateUser(updateData);
+
+      if (result.success) {
+        setAlertTitle("Sucesso!");
+        setAlertMessage(result.message);
+        setAlertVisible(true);
+        setPassword(""); 
+      } else {
+        setAlertTitle("Erro");
+        setAlertMessage(result.message);
+        setAlertVisible(true);
+      }
+    } catch (error) {
+      setAlertTitle("Erro");
+      setAlertMessage("Ocorreu um erro ao atualizar. Tente novamente.");
+      setAlertVisible(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
   };
 
   const closeAlert = () => {
@@ -75,15 +129,23 @@ export default function ProfileScreen({ navigation }: Props) {
     setAlertMessage("");
   };
 
+  if (!currentUser) {
+    return (
+      <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <Text style={{ color: "#fff", fontSize: 18 }}>Carregando...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#DC143C" />
 
-      {/* Header Glass */}
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}
+          disabled={isLoading}
         >
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
@@ -91,7 +153,6 @@ export default function ProfileScreen({ navigation }: Props) {
         <View style={{ width: 40 }} />
       </View>
 
-      {/* Background Particles */}
       <View style={styles.backgroundParticles}>
         <Animated.View style={[styles.particle, styles.particle1]} />
         <Animated.View style={[styles.particle, styles.particle2]} />
@@ -115,7 +176,6 @@ export default function ProfileScreen({ navigation }: Props) {
               },
             ]}
           >
-            {/* Avatar Section */}
             <Animated.View
               style={[
                 styles.avatarContainer,
@@ -123,18 +183,18 @@ export default function ProfileScreen({ navigation }: Props) {
               ]}
             >
               <View style={styles.avatarGlass}>
-                <Ionicons name="person" size={60} color="#DC143C" />
+                <Text style={{ fontSize: 40, color: "#DC143C", fontWeight: "700" }}>
+                  {name.charAt(0).toUpperCase()}
+                </Text>
               </View>
               <TouchableOpacity style={styles.avatarEditButton}>
                 <Ionicons name="camera" size={18} color="#fff" />
               </TouchableOpacity>
             </Animated.View>
 
-            <Text style={styles.avatarLabel}>Editar foto</Text>
+            <Text style={styles.avatarLabel}>{currentUser.email}</Text>
 
-            {/* Card Glass com inputs */}
             <View style={styles.glassCard}>
-              {/* Nome */}
               <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>Nome Completo</Text>
                 <View style={styles.inputWrapper}>
@@ -152,11 +212,11 @@ export default function ProfileScreen({ navigation }: Props) {
                     value={name}
                     onChangeText={setName}
                     style={styles.input}
+                    editable={!isLoading}
                   />
                 </View>
               </View>
 
-              {/* Email */}
               <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>Email</Text>
                 <View style={styles.inputWrapper}>
@@ -175,11 +235,11 @@ export default function ProfileScreen({ navigation }: Props) {
                     onChangeText={setEmail}
                     style={styles.input}
                     keyboardType="email-address"
+                    editable={!isLoading}
                   />
                 </View>
               </View>
 
-              {/* Telefone */}
               <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>Telefone</Text>
                 <View style={styles.inputWrapper}>
@@ -198,13 +258,13 @@ export default function ProfileScreen({ navigation }: Props) {
                     onChangeText={setPhone}
                     style={styles.input}
                     keyboardType="phone-pad"
+                    editable={!isLoading}
                   />
                 </View>
               </View>
 
-              {/* Senha */}
               <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Senha</Text>
+                <Text style={styles.inputLabel}>Nova Senha (opcional)</Text>
                 <View style={styles.inputWrapper}>
                   <Ionicons
                     name="lock-closed-outline"
@@ -215,16 +275,18 @@ export default function ProfileScreen({ navigation }: Props) {
                   <TextInput
                     autoCorrect={false}
                     autoCapitalize="none"
-                    placeholder="••••••••"
+                    placeholder="Nova senha"
                     placeholderTextColor="rgba(255, 255, 255, 0.4)"
                     value={password}
                     onChangeText={setPassword}
                     style={[styles.input, styles.passwordInput]}
                     secureTextEntry={!showPassword}
+                    editable={!isLoading}
                   />
                   <TouchableOpacity
                     onPress={() => setShowPassword(!showPassword)}
                     style={styles.eyeIcon}
+                    disabled={isLoading}
                   >
                     <Ionicons
                       name={showPassword ? "eye-off-outline" : "eye-outline"}
@@ -235,22 +297,27 @@ export default function ProfileScreen({ navigation }: Props) {
                 </View>
               </View>
 
-              {/* Botão Salvar */}
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, isLoading && { opacity: 0.7 }]}
                 onPress={handleEdit}
                 activeOpacity={0.8}
+                disabled={isLoading}
               >
-                <Ionicons
-                  name="checkmark-circle"
-                  size={22}
-                  color="#fff"
-                  style={{ marginRight: 8 }}
-                />
-                <Text style={styles.buttonText}>Salvar Alterações</Text>
+                {isLoading ? (
+                  <ActivityIndicator color="#fff" size="small" />
+                ) : (
+                  <>
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={22}
+                      color="#fff"
+                      style={{ marginRight: 8 }}
+                    />
+                    <Text style={styles.buttonText}>Salvar Alterações</Text>
+                  </>
+                )}
               </TouchableOpacity>
 
-              {/* Opções adicionais */}
               <View style={styles.optionsContainer}>
                 <TouchableOpacity style={styles.optionButton}>
                   <Ionicons
@@ -295,10 +362,10 @@ export default function ProfileScreen({ navigation }: Props) {
                 </TouchableOpacity>
               </View>
 
-              {/* Botão Sair */}
               <TouchableOpacity
                 style={styles.logoutButton}
-                onPress={() => navigation.navigate("Login")}
+                onPress={handleLogout}
+                disabled={isLoading}
               >
                 <Ionicons name="log-out-outline" size={20} color="#DC143C" />
                 <Text style={styles.logoutText}>Sair da Conta</Text>
@@ -308,7 +375,6 @@ export default function ProfileScreen({ navigation }: Props) {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      {/* Alert */}
       <CustomAlert
         isVisible={alertVisible}
         title={alertTitle}
