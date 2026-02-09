@@ -179,7 +179,7 @@ export default function LoginScreen({ navigation }: Props) {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.footerText}>JMS Car Showroom © 2024</Text>
+        <Text style={styles.footerText}>JMS Automotiva © 2026</Text>
       </Animated.View>
 
       <CustomAlert

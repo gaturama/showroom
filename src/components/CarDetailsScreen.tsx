@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -12,14 +12,18 @@ import { RootStackParamList } from "../navigation/types";
 import { CarImageCarousel } from "../components/CarCarousel";
 import { styles } from "../styles/stylesCarDetails";
 import { Ionicons } from "@expo/vector-icons";
+import { useFavorites } from "../components/Favorites";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CarDetails">;
 
 export default function CarDetailsScreen({ navigation, route }: Props) {
   const { car } = route.params;
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const [favorites, setFavorites] = useState(isFavorite(car.id));
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
+  const heartScale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     Animated.parallel([
@@ -37,11 +41,32 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
     ]).start();
   }, []);
 
+  useEffect(() => {
+    setFavorites(isFavorite(car.id));
+  }, [car.id, isFavorite]);
+
+  const handleToggleFavorite = () => {
+    Animated.sequence([
+      Animated.timing(heartScale, {
+        toValue: 1.3,
+        duration: 150,
+        useNativeDriver: true,
+      }),
+      Animated.timing(heartScale, {
+        toValue: 1,
+        duration: 150,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    toggleFavorite(car);
+    setFavorites(!favorites);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#DC143C" />
 
-      {/* Header Glass */}
       <View style={styles.header}>
         <View
           style={{
@@ -79,16 +104,25 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
           </Text>
 
           <TouchableOpacity
+            onPress={handleToggleFavorite}
             style={{
               width: 40,
               height: 40,
               borderRadius: 12,
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              backgroundColor: favorites
+                ? "rgba(220, 20, 60, 0.2)"
+                : "rgba(255, 255, 255, 0.1)",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Ionicons name="heart-outline" size={24} color="#fff" />
+            <Animated.View style={{ transform: [{ scale: heartScale }] }}>
+              <Ionicons
+                name={favorites ? "heart" : "heart-outline"}
+                size={24}
+                color={favorites ? "#fff" : "#fff"}
+              />
+            </Animated.View>
           </TouchableOpacity>
         </View>
       </View>

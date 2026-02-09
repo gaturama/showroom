@@ -1,6 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
-
-const { width } = Dimensions.get("window");
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -25,8 +23,8 @@ export const styles = StyleSheet.create({
     width: 300,
     height: 300,
     backgroundColor: "#DC143C",
-    top: "5%",
-    right: "-20%",
+    top: "8%",
+    left: "-25%",
     shadowColor: "#DC143C",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
@@ -38,8 +36,8 @@ export const styles = StyleSheet.create({
     width: 250,
     height: 250,
     backgroundColor: "#FF6B6B",
-    top: "40%",
-    left: "-25%",
+    top: "45%",
+    right: "-20%",
     shadowColor: "#FF6B6B",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
@@ -51,8 +49,8 @@ export const styles = StyleSheet.create({
     width: 200,
     height: 200,
     backgroundColor: "#DC143C",
-    bottom: "10%",
-    right: "20%",
+    bottom: "12%",
+    left: "25%",
     shadowColor: "#DC143C",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.7,
@@ -82,6 +80,8 @@ export const styles = StyleSheet.create({
   headerButton: {
     width: 40,
     height: 40,
+    borderRadius: 12,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -115,17 +115,17 @@ export const styles = StyleSheet.create({
 
   statItem: {
     alignItems: "center",
+    gap: 4,
   },
 
   statNumber: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#DC143C",
-    marginBottom: 4,
   },
 
   statLabel: {
-    fontSize: 12,
+    fontSize: 11,
     color: "rgba(255, 255, 255, 0.6)",
     fontWeight: "500",
   },
@@ -140,5 +140,66 @@ export const styles = StyleSheet.create({
   listContent: {
     paddingVertical: 16,
     paddingBottom: 24,
+  },
+
+  // Empty State
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 40,
+  },
+
+  emptyIconContainer: {
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 32,
+    borderWidth: 2,
+    borderColor: "rgba(255, 255, 255, 0.1)",
+  },
+
+  emptyTitle: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: "#fff",
+    marginBottom: 16,
+    textAlign: "center",
+    letterSpacing: 0.3,
+  },
+
+  emptyText: {
+    fontSize: 16,
+    color: "rgba(255, 255, 255, 0.6)",
+    textAlign: "center",
+    lineHeight: 24,
+    marginBottom: 32,
+  },
+
+  emptyButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#DC143C",
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 16,
+    shadowColor: "#DC143C",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+
+  emptyButtonText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#fff",
+    letterSpacing: 0.5,
   },
 });

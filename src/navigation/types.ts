@@ -8,4 +8,5 @@ export type RootStackParamList = {
     CarDetails: {
         car: Car;
     };
+    Favorites: undefined;
 };

@@ -1,6 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
-
-const { width, height } = Dimensions.get("window");
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,7 +6,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#121212",
   },
 
-  // Background Particles (efeito liquid glass)
   backgroundParticles: {
     position: "absolute",
     width: "100%",
@@ -60,7 +57,6 @@ export const styles = StyleSheet.create({
     elevation: 9,
   },
 
-  // Content
   contentContainer: {
     flex: 1,
     justifyContent: "center",
@@ -70,16 +66,15 @@ export const styles = StyleSheet.create({
   },
 
   logoContainer: {
-    marginBottom: 40,
+    marginBottom: 10,
     alignItems: "center",
   },
 
   image: {
-    width: 280,
-    height: 160,
+    width: 340,
+    height: 220,
   },
 
-  // Glass Card Effect
   glassCard: {
     width: "100%",
     backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -97,7 +92,6 @@ export const styles = StyleSheet.create({
     elevation: 15,
   },
 
-  // Input Container
   inputContainer: {
     marginBottom: 20,
   },
@@ -121,7 +115,6 @@ export const styles = StyleSheet.create({
     borderColor: "rgba(255, 255, 255, 0.15)",
   },
 
-  // Password Container
   passwordContainer: {
     position: "relative",
     width: "100%",
@@ -145,7 +138,6 @@ export const styles = StyleSheet.create({
     tintColor: "rgba(255, 255, 255, 0.6)",
   },
 
-  // Button (mantendo a cor original #DC143C)
   button: {
     backgroundColor: "#DC143C",
     paddingVertical: 18,
@@ -170,7 +162,6 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // Divider
   divider: {
     flexDirection: "row",
     alignItems: "center",
@@ -190,7 +181,6 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  // Register Link
   registerLink: {
     alignItems: "center",
   },
@@ -206,7 +196,6 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  // Footer
   footerText: {
     marginTop: 32,
     fontSize: 13,

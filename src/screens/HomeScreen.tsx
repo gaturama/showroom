@@ -115,7 +115,7 @@ const MOCK_CARS: Car[] = [
   },
   {
     id: "5",
-    name: "Audi R8 V10 Performance",
+    name: "Audi R8 Performance",
     brand: "Audi",
     model: "R8 V10 Performance",
     year: 2022,
@@ -135,6 +135,98 @@ const MOCK_CARS: Car[] = [
       require("../assets/audi_r8_back.jpg"),
       require("../assets/audi_r8_front.jpg"),
       require("../assets/audi_r8_side.jpg"),
+    ],
+  },
+  {
+    id: "6",
+    name: "Bentley Continental GT",
+    brand: "Bentley",
+    model: "Continental GT",
+    year: 2020,
+    engine: "4.0L Twin-Turbo V8",
+    horsepower: 550,
+    torque: "67,3 kgfm",
+    transmission: "Automático 8 marchas",
+    drivetrain: "AWD (Tração Integral)",
+    fuelType: "Gasolina",
+    maxSpeed: 303,
+    acceleration: "4s",
+    weight: 2295,
+    price: 2000000,
+    description: "O Bentley Continental GT V8 é a definição de luxo com alma esportiva. Debaixo do capô, o motor V8 biturbo entrega potência e torque de sobra, garantindo acelerações fortes e um ronco marcante — tudo isso sem abrir mão da suavidade característica da Bentley.",
+    images: [
+      require("../assets/bentley_frontSide.jpg"),
+      require("../assets/bentley_back.jpg"),
+      require("../assets/bentley_side.jpg"),
+    ],
+  },
+  {
+    id: "7",
+    name: "Koenigsegg Regera",
+    brand: "Koenigsegg",
+    model: "Regera",
+    year: 2016,
+    engine: "5.0L Twin-Turbo V8 Híbrido",
+    horsepower: 1500,
+    torque: "203,9 kgfm",
+    transmission: "Automático 1 marcha",
+    drivetrain: "RWD (Tração Traseira)",
+    fuelType: "Gasolina/Eletrecidade",
+    maxSpeed: 303,
+    acceleration: "2,8s",
+    weight: 1420,
+    price: 30000000,
+    description: "O Koenigsegg Regera é o ápice da engenharia automotiva moderna — um hipercarro híbrido sueco que redefine o que significa desempenho sem concessões. Com um sistema híbrido inovador combinando um motor V8 twin-turbo de alta potência com motores elétricos integrados, o Regera entrega uma aceleração brutal, torque instantâneo e tecnologia de transmissão direta que elimina a necessidade de uma caixa de câmbio tradicional.",
+    images: [
+      require("../assets/koenigsegg_regera_back.jpg"),
+      require("../assets/koenigsegg_regera_front.jpg"),
+      require("../assets/koenigsegg_regera_side.jpg"),
+    ],
+  },
+   {
+    id: "8",
+    name: "BMW M3 Competition",
+    brand: "BMW",
+    model: "M3 Competition",
+    year: 2023,
+    engine: "3.0L Twin-Turbo",
+    horsepower: 510,
+    torque: "66,3 kgfm",
+    transmission: "Automático 8 marchas",
+    drivetrain: "RWD (Tração Traseira)",
+    fuelType: "Gasolina",
+    maxSpeed: 290,
+    acceleration: "3,9s",
+    weight: 1730,
+    price: 6022030,
+    description: "O BMW M3 Competition é a síntese perfeita entre desempenho bruto e usabilidade diária. Com um motor twin-turbo de 6 cilindros em linha que entrega uma potência vigorosa e um som inconfundível, essa versão Competition eleva o M3 a um patamar ainda mais esportivo — resposta instantânea do acelerador, aceleração feroz e controle preciso em qualquer curva.",
+    images: [
+      require("../assets/bmw_m3_frontSide.jpg"),
+      require("../assets/bmw_m3_back.jpg"),
+      require("../assets/bmw_m3_side.jpg"),
+    ],
+  },
+  {
+    id: "9",
+    name: "McLaren Senna",
+    brand: "McLaren",
+    model: "Senna",
+    year: 2018,
+    engine: "4.0L Twin-Turbo V8",
+    horsepower: 800,
+    torque: "81,6 kgfm",
+    transmission: "Automático 7 marchas",
+    drivetrain: "RWD (Tração Traseira)",
+    fuelType: "Gasolina",
+    maxSpeed: 340,
+    acceleration: "2,8s",
+    weight: 1198,
+    price: 14000000,
+    description: "O McLaren Senna é a mais pura expressão da obsessão pela performance — um hipercarro projetado para dominar pistas, inspirado no lendário piloto Ayrton Senna. Com um motor V8 biturbo de alta rotação e uma relação peso-potência impressionante, ele entrega aceleração visceral, respostas instantâneas e performance cirúrgica em cada curva.",
+    images: [
+      require("../assets/mcLaren_Senna_front.jpg"),
+      require("../assets/mcLaren_Senna_side.jpg"),
+      require("../assets/mcLaren_Senna_back.jpg"),
     ],
   },
 ];
@@ -171,14 +263,12 @@ export default function HomeScreen({ navigation }: Props) {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#DC143C" />
 
-      {/* Background Particles */}
       <View style={styles.backgroundParticles}>
         <Animated.View style={[styles.particle, styles.particle1]} />
         <Animated.View style={[styles.particle, styles.particle2]} />
         <Animated.View style={[styles.particle, styles.particle3]} />
       </View>
 
-      {/* Header Glass */}
       <Animated.View
         style={[
           styles.header,
@@ -207,6 +297,12 @@ export default function HomeScreen({ navigation }: Props) {
 
         <TouchableOpacity onPress={handleProfile} style={styles.headerButton}>
           <Ionicons name="person-circle" size={28} color="#fff" />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("Favorites")}
+          style={styles.headerButton}
+          >
+            <Ionicons name="heart" size={24} color="#fff"/>
         </TouchableOpacity>
       </Animated.View>
 
