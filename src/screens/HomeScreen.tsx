@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   View,
   FlatList,
@@ -13,11 +13,21 @@ import { styles } from "../styles/stylesHome";
 import { CarCard } from "../components/CarCard";
 import { Car } from "../navigation/car";
 import { Ionicons } from "@expo/vector-icons";
-import { MOCK_CARS, getTotalHorsePower, getTotalValue } from "../data/carsData";
+import { MOCK_CARS } from "../data/carsData";
+import {
+  BrandFilter,
+  FilterModal,
+  SortOption,
+} from "../components/FilterModal";
+import { SearchBar } from "../components/SearchBar";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function HomeScreen({ navigation }: Props) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>("price-desc");
+  const [brandFilter, setBrandFilter] = useState<BrandFilter>("all");
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(-20)).current;
 
@@ -37,12 +47,76 @@ export default function HomeScreen({ navigation }: Props) {
     ]).start();
   }, []);
 
+  const filteredAndSortedCars = useMemo(() => {
+    let result = [...MOCK_CARS];
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(
+        (car) =>
+          car.name.toLowerCase().includes(query) ||
+          car.brand.toLowerCase().includes(query) ||
+          car.model.toLowerCase().includes(query),
+      );
+    }
+
+    if (brandFilter !== "all") {
+      result = result.filter((car) => car.brand === brandFilter);
+    }
+
+    switch (sortBy) {
+      case "price-asc":
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case "hp-asc":
+        result.sort((a, b) => a.horsepower - b.horsepower);
+        break;
+      case "hp-desc":
+        result.sort((a, b) => b.horsepower - a.horsepower);
+        break;
+      case "speed-desc":
+        result.sort((a, b) => b.maxSpeed - a.maxSpeed);
+        break;
+      case "year-desc":
+        result.sort((a, b) => b.year - a.year);
+        break;
+      case "year-asc":
+        result.sort((a, b) => a.year - b.year);
+        break;
+    }
+
+    return result;
+  }, [searchQuery, brandFilter, sortBy]);
+
   const handleProfile = () => {
     navigation.navigate("Profile");
   };
 
   const handleCarPress = (car: Car) => {
     navigation.navigate("CarDetails", { car });
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
+
+  const handleApplyFilters = () => {
+    setFilterModalVisible(false);
+  };
+
+  const handleResetFilters = () => {
+    setSortBy("year-asc");
+    setBrandFilter("all");
+  };
+
+  const getActiveFilterCount = () => {
+    let count = 0;
+    if (sortBy !== "year-asc") count++;
+    if (brandFilter !== "all") count++;
+    return count;
   };
 
   return (
@@ -64,6 +138,13 @@ export default function HomeScreen({ navigation }: Props) {
           },
         ]}
       >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Favorites")}
+          style={styles.headerButton}
+        >
+          <Ionicons name="heart" size={24} color="#fff" />
+        </TouchableOpacity>
+
         <View style={styles.headerCenter}>
           <Ionicons
             name="car-sport"
@@ -77,49 +158,141 @@ export default function HomeScreen({ navigation }: Props) {
         <TouchableOpacity onPress={handleProfile} style={styles.headerButton}>
           <Ionicons name="person-circle" size={28} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Favorites")}
-          style={styles.headerButton}
-        >
-          <Ionicons name="heart" size={24} color="#fff" />
-        </TouchableOpacity>
+      </Animated.View>
+
+      <Animated.View
+        style={{
+          opacity: fadeAnim,
+          transform: [{ translateY: slideAnim }],
+        }}
+      >
+        <SearchBar
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          onClear={handleClearSearch}
+          placeholder="Buscar por nome, marca ou modelo..."
+        />
       </Animated.View>
 
       <Animated.View
         style={[
-          styles.statsBar,
+          styles.filterRow,
           {
             opacity: fadeAnim,
             transform: [{ translateY: slideAnim }],
           },
         ]}
       >
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{MOCK_CARS.length}</Text>
-          <Text style={styles.statLabel}>Carros</Text>
-        </View>
-        <View style={styles.statDivider} />
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{getTotalHorsePower()}</Text>
-          <Text style={styles.statLabel}>HP Total</Text>
-        </View>
-        <View style={styles.statDivider} />
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>
-            R$ {(getTotalValue() / 1000000).toFixed(1)}M
+        <TouchableOpacity
+          style={styles.filterButton}
+          onPress={() => setFilterModalVisible(true)}
+        >
+          <Ionicons name="options" size={20} color="#fff" />
+          <Text style={styles.filterButtonText}>Filtros</Text>
+          {getActiveFilterCount() > 0 && (
+            <View style={styles.filterBadge}>
+              <Text style={styles.filterBadgeText}>
+                {getActiveFilterCount()}
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+
+        <View style={styles.resultCount}>
+          <Text style={styles.resultCountText}>
+            {filteredAndSortedCars.length}{" "}
+            {filteredAndSortedCars.length === 1 ? "carro" : "carros"}
           </Text>
-          <Text style={styles.statLabel}>Valor</Text>
         </View>
       </Animated.View>
 
-      <FlatList
-        data={MOCK_CARS}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <CarCard car={item} onPress={() => handleCarPress(item)} />
-        )}
-        contentContainerStyle={styles.listContent}
-        showsVerticalScrollIndicator={false}
+      {/* Stats Bar */}
+      {filteredAndSortedCars.length > 0 && (
+        <Animated.View
+          style={[
+            styles.statsBar,
+            {
+              opacity: fadeAnim,
+              transform: [{ translateY: slideAnim }],
+            },
+          ]}
+        >
+          <View style={styles.statItem}>
+            <Text style={styles.statNumber}>
+              {filteredAndSortedCars.length}
+            </Text>
+            <Text style={styles.statLabel}>Carros</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.statItem}>
+            <Text style={styles.statNumber}>
+              {filteredAndSortedCars.reduce(
+                (acc, car) => acc + car.horsepower,
+                0,
+              )}
+            </Text>
+            <Text style={styles.statLabel}>HP Total</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.statItem}>
+            <Text style={styles.statNumber}>
+              R${" "}
+              {(
+                filteredAndSortedCars.reduce((acc, car) => acc + car.price, 0) /
+                1000000
+              ).toFixed(1)}
+              M
+            </Text>
+            <Text style={styles.statLabel}>Valor</Text>
+          </View>
+        </Animated.View>
+      )}
+
+      {/* Car List or Empty State */}
+      {filteredAndSortedCars.length === 0 ? (
+        <View style={styles.emptyState}>
+          <Ionicons
+            name="car-sport-outline"
+            size={80}
+            color="rgba(255, 255, 255, 0.3)"
+          />
+          <Text style={styles.emptyTitle}>Nenhum carro encontrado</Text>
+          <Text style={styles.emptyText}>
+            Tente ajustar sua busca ou filtros
+          </Text>
+          <TouchableOpacity
+            style={styles.emptyButton}
+            onPress={() => {
+              setSearchQuery("");
+              handleResetFilters();
+            }}
+          >
+            <Text style={styles.emptyButtonText}>Limpar Filtros</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <FlatList
+          data={filteredAndSortedCars}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <CarCard car={item} onPress={() => handleCarPress(item)} />
+          )}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
+
+      <FilterModal
+        visible={filterModalVisible}
+        onClose={() => setFilterModalVisible(false)}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        brandFilter={brandFilter}
+        setBrandFilter={setBrandFilter}
+        priceRange={{ min: 0, max: 50000000 }}
+        setPriceRange={() => {}}
+        onApply={handleApplyFilters}
+        onReset={handleResetFilters}
       />
     </View>
   );

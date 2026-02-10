@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#121212",
   },
 
-  // Background Particles
   backgroundParticles: {
     position: "absolute",
     width: "100%",
@@ -58,7 +57,6 @@ export const styles = StyleSheet.create({
     elevation: 9,
   },
 
-  // Header Glass
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -81,7 +79,6 @@ export const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 12,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -98,7 +95,6 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // Stats Bar
   statsBar: {
     flexDirection: "row",
     alignItems: "center",
@@ -136,13 +132,11 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
 
-  // List Content
   listContent: {
     paddingVertical: 16,
     paddingBottom: 24,
   },
 
-  // Empty State
   emptyContainer: {
     flex: 1,
     justifyContent: "center",

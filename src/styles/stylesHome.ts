@@ -1,6 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
-
-const { width } = Dimensions.get("window");
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,7 +6,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#121212",
   },
 
-  // Background Particles
   backgroundParticles: {
     position: "absolute",
     width: "100%",
@@ -60,7 +57,6 @@ export const styles = StyleSheet.create({
     elevation: 9,
   },
 
-  // Header Glass
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -82,12 +78,13 @@ export const styles = StyleSheet.create({
   headerButton: {
     width: 40,
     height: 40,
+    borderRadius: 12,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     alignItems: "center",
     justifyContent: "center",
   },
 
   headerCenter: {
-    marginLeft: 60,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -99,13 +96,66 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 
-  // Stats Bar
+  filterRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    marginBottom: 8,
+  },
+
+  filterButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.15)",
+    gap: 8,
+  },
+
+  filterButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+
+  filterBadge: {
+    backgroundColor: "#DC143C",
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  filterBadgeText: {
+    color: "#fff",
+    fontSize: 11,
+    fontWeight: "700",
+  },
+
+  resultCount: {
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+
+  resultCountText: {
+    color: "rgba(255, 255, 255, 0.7)",
+    fontSize: 13,
+    fontWeight: "600",
+  },
+
   statsBar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
     marginHorizontal: 16,
-    marginTop: 16,
+    marginTop: 8,
     marginBottom: 8,
     padding: 16,
     backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -122,7 +172,6 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: "#DC143C",
-    marginBottom: 4,
   },
 
   statLabel: {
@@ -137,9 +186,43 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
 
-  // List Content
   listContent: {
     paddingVertical: 16,
     paddingBottom: 24,
+  },
+
+  emptyState: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 40,
+  },
+
+  emptyTitle: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#fff",
+    marginTop: 20,
+    marginBottom: 12,
+  },
+
+  emptyText: {
+    fontSize: 16,
+    color: "rgba(255, 255, 255, 0.6)",
+    textAlign: "center",
+    marginBottom: 24,
+  },
+
+  emptyButton: {
+    backgroundColor: "#DC143C",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+
+  emptyButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
   },
 });

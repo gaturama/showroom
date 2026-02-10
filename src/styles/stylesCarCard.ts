@@ -55,7 +55,6 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
 
-  // Badge para destacar recursos premium
   badge: {
     position: "absolute",
     top: 16,
