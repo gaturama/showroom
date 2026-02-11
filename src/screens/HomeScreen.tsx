@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
-import { styles } from "../styles/stylesHome";
 import { CarCard } from "../components/CarCard";
 import { Car } from "../navigation/car";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,6 +19,9 @@ import {
   SortOption,
 } from "../components/FilterModal";
 import { SearchBar } from "../components/SearchBar";
+import { useTheme } from "../context/ThemeContext";
+import { useThemedStyles } from "../hooks/useThemedStyles";
+import { createStyles } from "../styles/stylesHome";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -28,6 +30,11 @@ export default function HomeScreen({ navigation }: Props) {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("price-desc");
   const [brandFilter, setBrandFilter] = useState<BrandFilter>("all");
+
+  const styles = useThemedStyles(createStyles);
+
+  const { colors } = useTheme();
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(-20)).current;
 
@@ -121,7 +128,10 @@ export default function HomeScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#DC143C" />
+      <StatusBar
+        barStyle={colors.statusBarStyle}
+        backgroundColor={colors.accent}
+      />
 
       <View style={styles.backgroundParticles}>
         <Animated.View style={[styles.particle, styles.particle1]} />
@@ -142,21 +152,21 @@ export default function HomeScreen({ navigation }: Props) {
           onPress={() => navigation.navigate("Favorites")}
           style={styles.headerButton}
         >
-          <Ionicons name="heart" size={24} color="#fff" />
+          <Ionicons name="heart" size={24} color="white" />
         </TouchableOpacity>
 
         <View style={styles.headerCenter}>
           <Ionicons
             name="car-sport"
             size={24}
-            color="#fff"
+            color="white"
             style={{ marginRight: 8 }}
           />
           <Text style={styles.headerTitle}>Garagem Premium</Text>
         </View>
 
         <TouchableOpacity onPress={handleProfile} style={styles.headerButton}>
-          <Ionicons name="person-circle" size={28} color="#fff" />
+          <Ionicons name="person-circle" size={28} color="white " />
         </TouchableOpacity>
       </Animated.View>
 
@@ -187,7 +197,7 @@ export default function HomeScreen({ navigation }: Props) {
           style={styles.filterButton}
           onPress={() => setFilterModalVisible(true)}
         >
-          <Ionicons name="options" size={20} color="#fff" />
+          <Ionicons name="options" size={20} color={colors.textPrimary} />
           <Text style={styles.filterButtonText}>Filtros</Text>
           {getActiveFilterCount() > 0 && (
             <View style={styles.filterBadge}>
@@ -206,7 +216,6 @@ export default function HomeScreen({ navigation }: Props) {
         </View>
       </Animated.View>
 
-      {/* Stats Bar */}
       {filteredAndSortedCars.length > 0 && (
         <Animated.View
           style={[
@@ -248,13 +257,12 @@ export default function HomeScreen({ navigation }: Props) {
         </Animated.View>
       )}
 
-      {/* Car List or Empty State */}
       {filteredAndSortedCars.length === 0 ? (
         <View style={styles.emptyState}>
           <Ionicons
             name="car-sport-outline"
             size={80}
-            color="rgba(255, 255, 255, 0.3)"
+            color={colors.textTertiary}
           />
           <Text style={styles.emptyTitle}>Nenhum carro encontrado</Text>
           <Text style={styles.emptyText}>

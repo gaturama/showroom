@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
-export const styles = StyleSheet.create({
+
+export const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
+    backgroundColor: colors.background,
   },
 
   backgroundParticles: {
@@ -76,11 +77,11 @@ export const styles = StyleSheet.create({
 
   glassCard: {
     width: "100%",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.glassBackground,
     borderRadius: 28,
     padding: 24,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: colors.glassBorder,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -186,12 +187,12 @@ export const styles = StyleSheet.create({
 
   textCadastro: {
     fontSize: 15,
-    color: "rgba(255, 255, 255, 0.7)",
+    color: colors.textPrimary,
     fontWeight: "400",
   },
 
   textCadastroStrong: {
-    color: "#DC143C",
+    color: colors.textSecondary,
     fontWeight: "700",
   },
 

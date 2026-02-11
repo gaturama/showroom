@@ -13,8 +13,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { useFocusEffect } from "@react-navigation/native";
 import CustomAlert from "../components/CustomAlert";
-import { styles } from "../styles/stylesLogin";
+import { createStyles } from "../styles/stylesLogin";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+import { useThemedStyles } from "../hooks/useThemedStyles";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
@@ -26,6 +28,8 @@ export default function LoginScreen({ navigation }: Props) {
   const [alertTitle, setAlertTitle] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { colors } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   const { login } = useAuth();
 
