@@ -28,9 +28,9 @@ export default function LoginScreen({ navigation }: Props) {
   const [alertTitle, setAlertTitle] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { colors } = useTheme();
-  const styles = useThemedStyles(createStyles);
 
+  const { colors, isDark } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const { login } = useAuth();
 
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
@@ -108,7 +108,7 @@ export default function LoginScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#121212" />
+      <StatusBar barStyle={colors.statusBarStyle} backgroundColor={colors.background} />
 
       <View style={styles.backgroundParticles}>
         <Animated.View style={[styles.particle, styles.particle1]} />
@@ -127,7 +127,11 @@ export default function LoginScreen({ navigation }: Props) {
       >
         <View style={styles.logoContainer}>
           <Image
-            source={require("../assets/jms_logo.png")}
+            source={
+              isDark
+              ? require("../assets/jms_logo.png")
+              : require("../assets/jms_logo_black.png")
+            }
             style={styles.image}
             resizeMode="contain"
           />
@@ -140,7 +144,7 @@ export default function LoginScreen({ navigation }: Props) {
               autoCorrect={false}
               autoCapitalize="none"
               placeholder="seu@email.com"
-              placeholderTextColor="rgba(255, 255, 255, 0.4)"
+              placeholderTextColor={colors.placeholder}
               keyboardType="email-address"
               value={email}
               onChangeText={setEmail}
@@ -157,7 +161,7 @@ export default function LoginScreen({ navigation }: Props) {
                 autoCapitalize="none"
                 secureTextEntry={!showPassword}
                 placeholder="••••••••"
-                placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                placeholderTextColor={colors.placeholder}
                 value={password}
                 onChangeText={setPassword}
                 style={[styles.input, styles.passwordInput]}

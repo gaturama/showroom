@@ -1,15 +1,15 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
+    backgroundColor: colors.background,
   },
 
   header: {
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.accent,
     elevation: 8,
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -25,30 +25,30 @@ export const styles = StyleSheet.create({
   carName: {
     fontSize: 32,
     fontWeight: "700",
-    color: "#fff",
+    color: colors.textPrimary,
     marginBottom: 6,
     letterSpacing: -0.5,
   },
 
   carModel: {
     fontSize: 16,
-    color: "rgba(255, 255, 255, 0.6)",
+    color: colors.textSecondary,
     marginBottom: 20,
     fontWeight: "500",
   },
 
   priceContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.glassBackground,
     padding: 20,
     borderRadius: 16,
     marginTop: 8,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: colors.glassBorder,
   },
 
   priceLabel: {
     fontSize: 13,
-    color: "rgba(255, 255, 255, 0.5)",
+    color: colors.textSecondary,
     marginBottom: 6,
     fontWeight: "600",
     textTransform: "uppercase",
@@ -65,20 +65,20 @@ export const styles = StyleSheet.create({
   section: {
     padding: 20,
     borderTopWidth: 1,
-    borderTopColor: "rgba(255, 255, 255, 0.05)",
+    borderTopColor: colors.glassBorder,
   },
 
   sectionTitle: {
     fontSize: 22,
     fontWeight: "700",
-    color: "#fff",
+    color: colors.textPrimary,
     marginBottom: 16,
     letterSpacing: 0.3,
   },
 
   description: {
     fontSize: 15,
-    color: "rgba(255, 255, 255, 0.7)",
+    color: colors.textSecondary,
     lineHeight: 24,
   },
 
@@ -89,27 +89,27 @@ export const styles = StyleSheet.create({
   },
 
   highlightCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.cardBackground,
     borderRadius: 16,
     padding: 20,
     alignItems: "center",
     flex: 1,
     minWidth: "45%",
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: colors.cardBorder,
   },
 
   highlightValue: {
     fontSize: 22,
     fontWeight: "700",
-    color: "#fff",
+    color: colors.textPrimary,
     marginTop: 10,
     letterSpacing: 0.3,
   },
 
   highlightLabel: {
     fontSize: 12,
-    color: "rgba(255, 255, 255, 0.5)",
+    color: colors.textSecondary,
     marginTop: 6,
     textAlign: "center",
     fontWeight: "500",
@@ -123,11 +123,11 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.glassBackground,
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)",
+    borderColor: colors.glassBorder,
   },
 
   specLeft: {
@@ -139,14 +139,14 @@ export const styles = StyleSheet.create({
 
   specLabel: {
     fontSize: 14,
-    color: "rgba(255, 255, 255, 0.7)",
+    color: colors.textSecondary,
     fontWeight: "500",
   },
 
   specValue: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#DC143C",
+    color: colors.accent,
     letterSpacing: 0.3,
   },
 
@@ -154,12 +154,12 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#DC143C",
+    backgroundColor:colors.accent,
     marginHorizontal: 20,
     marginTop: 8,
     borderRadius: 16,
     paddingVertical: 16,
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 8,

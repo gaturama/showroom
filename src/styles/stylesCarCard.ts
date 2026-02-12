@@ -1,15 +1,15 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: any) =>StyleSheet.create({
   card: {
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.background,
     borderRadius: 24,
     marginHorizontal: 16,
     marginVertical: 8,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
-    shadowColor: "#000",
+    borderColor: colors.glassBorder,
+    shadowColor: colors.shadowColor,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.4,
     shadowRadius: 12,
@@ -18,13 +18,13 @@ export const styles = StyleSheet.create({
 
   info: {
     padding: 20,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backgroundColor: colors.glassBackground,
   },
 
   name: {
     fontSize: 22,
     fontWeight: "700",
-    color: "#fff",
+    color: colors.textPrimary,
     marginBottom: 16,
     letterSpacing: 0.3,
   },
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
 
   specLabel: {
     fontSize: 11,
-    color: "rgba(255, 255, 255, 0.5)",
+    color: colors.textSecondary,
     marginBottom: 6,
     fontWeight: "600",
     textTransform: "uppercase",
@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
   specValue: {
     fontSize: 15,
     fontWeight: "700",
-    color: "#DC143C",
+    color: colors.accent,
     letterSpacing: 0.3,
   },
 
@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
     position: "absolute",
     top: 16,
     right: 16,
-    backgroundColor: "rgba(220, 20, 60, 0.9)",
+    backgroundColor: colors.accent,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 12,

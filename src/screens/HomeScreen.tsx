@@ -166,7 +166,7 @@ export default function HomeScreen({ navigation }: Props) {
         </View>
 
         <TouchableOpacity onPress={handleProfile} style={styles.headerButton}>
-          <Ionicons name="person-circle" size={28} color="white " />
+          <Ionicons name="person-circle" size={28} color="white" />
         </TouchableOpacity>
       </Animated.View>
 

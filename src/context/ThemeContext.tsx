@@ -96,7 +96,7 @@ const lightColors: ThemeColors = {
   textTertiary: "rgba(0, 0, 0, 0.5)",
 
   accent: "#DC143C",
-  accentLight: "rgba(220, 20, 60, 0.1)",
+  accentLight: "rgba(220, 20, 60, 0.2)",
 
   statusBarStyle: "dark-content",
 

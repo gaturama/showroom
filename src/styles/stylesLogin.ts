@@ -21,10 +21,10 @@ export const createStyles = (colors: any) => StyleSheet.create({
   particle1: {
     width: 300,
     height: 300,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.particleColor,
     top: "10%",
     left: "-20%",
-    shadowColor: "#DC143C",
+    shadowColor: colors.particleColor,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 100,
@@ -34,10 +34,10 @@ export const createStyles = (colors: any) => StyleSheet.create({
   particle2: {
     width: 250,
     height: 250,
-    backgroundColor: "#FF6B6B",
+    backgroundColor: colors.particleColorSecondary,
     top: "60%",
     right: "-15%",
-    shadowColor: "#FF6B6B",
+    shadowColor: colors.particleColorSecondary,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
     shadowRadius: 80,
@@ -47,10 +47,10 @@ export const createStyles = (colors: any) => StyleSheet.create({
   particle3: {
     width: 200,
     height: 200,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.particleColor,
     bottom: "5%",
     left: "20%",
-    shadowColor: "#DC143C",
+    shadowColor: colors.particleColor,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.7,
     shadowRadius: 90,
@@ -82,7 +82,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
     padding: 24,
     borderWidth: 1,
     borderColor: colors.glassBorder,
-    shadowColor: "#000",
+    shadowColor: colors.shadowColor,
     shadowOffset: {
       width: 0,
       height: 10,
@@ -99,20 +99,20 @@ export const createStyles = (colors: any) => StyleSheet.create({
   inputLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.7)",
+    color: colors.textSecondary,
     marginBottom: 8,
     marginLeft: 4,
   },
 
   input: {
     width: "100%",
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    backgroundColor: colors.inputBackground,
     borderRadius: 16,
     padding: 18,
     fontSize: 16,
-    color: "#FFF",
+    color: colors.textPrimary,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.15)",
+    borderColor: colors.inputBorder,
   },
 
   passwordContainer: {
@@ -135,17 +135,16 @@ export const createStyles = (colors: any) => StyleSheet.create({
   eyeImage: {
     width: 24,
     height: 24,
-    tintColor: "rgba(255, 255, 255, 0.6)",
   },
 
   button: {
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.accent,
     paddingVertical: 18,
     paddingHorizontal: 32,
     borderRadius: 16,
     alignItems: "center",
     marginTop: 8,
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 8,
@@ -171,13 +170,13 @@ export const createStyles = (colors: any) => StyleSheet.create({
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    backgroundColor: colors.glassBorder,
   },
 
   dividerText: {
     marginHorizontal: 16,
     fontSize: 14,
-    color: "rgba(255, 255, 255, 0.5)",
+    color: colors.textTertiary,
     fontWeight: "500",
   },
 
@@ -187,19 +186,19 @@ export const createStyles = (colors: any) => StyleSheet.create({
 
   textCadastro: {
     fontSize: 15,
-    color: colors.textPrimary,
+    color: colors.textSecondary,
     fontWeight: "400",
   },
 
   textCadastroStrong: {
-    color: colors.textSecondary,
+    color: colors.accent,
     fontWeight: "700",
   },
 
   footerText: {
     marginTop: 32,
     fontSize: 13,
-    color: "rgba(255, 255, 255, 0.4)",
+    color: colors.textTertiary,
     fontWeight: "500",
   },
 });

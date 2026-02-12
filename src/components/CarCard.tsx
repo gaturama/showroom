@@ -2,7 +2,9 @@ import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { CarImageCarousel } from './CarCarousel';
 import { Car } from '../navigation/car';
-import { styles } from '../styles/stylesCarCard';
+import { useTheme } from '../context/ThemeContext';
+import { useThemedStyles } from '../hooks/useThemedStyles';
+import { createStyles } from '../styles/stylesCarCard';
 
 interface CarCardProps {
   car: Car;
@@ -10,6 +12,8 @@ interface CarCardProps {
 }
 
 export const CarCard: React.FC<CarCardProps> = ({ car, onPress }) => {
+  const styles = useThemedStyles(createStyles)
+  
   return (
     <Pressable 
       style={styles.card}

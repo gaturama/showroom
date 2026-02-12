@@ -1,11 +1,9 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 
-const { width, height } = Dimensions.get("window");
-
-export const styles = StyleSheet.create({
+export const createStyles = (colors: any) =>  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
+    backgroundColor: colors.background,
   },
 
   header: {
@@ -15,8 +13,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 50,
     paddingBottom: 16,
-    backgroundColor: "#DC143C",
-    shadowColor: "#DC143C",
+    backgroundColor: colors.accent,
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -57,10 +55,10 @@ export const styles = StyleSheet.create({
   particle1: {
     width: 280,
     height: 280,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.particleColor,
     top: "15%",
     right: "-20%",
-    shadowColor: "#DC143C",
+    shadowColor: colors.particleColor,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 100,
@@ -70,10 +68,10 @@ export const styles = StyleSheet.create({
   particle2: {
     width: 220,
     height: 220,
-    backgroundColor: "#FF6B6B",
+    backgroundColor: colors.particleColorSecondary,
     top: "50%",
     left: "-15%",
-    shadowColor: "#FF6B6B",
+    shadowColor: colors.particleColorSecondary,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
     shadowRadius: 80,
@@ -83,10 +81,10 @@ export const styles = StyleSheet.create({
   particle3: {
     width: 180,
     height: 180,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.particleColor,
     bottom: "10%",
     right: "25%",
-    shadowColor: "#DC143C",
+    shadowColor: colors.particleColor,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.7,
     shadowRadius: 90,
@@ -111,25 +109,25 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "700",
-    color: "#fff",
+    color: colors.textPrimary,
     marginBottom: 8,
     letterSpacing: -0.5,
   },
 
   subtitle: {
     fontSize: 16,
-    color: "rgba(255, 255, 255, 0.6)",
+    color: colors.textSecondary,
     fontWeight: "400",
   },
 
   glassCard: {
     width: "100%",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.glassBackground,
     borderRadius: 28,
     padding: 24,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
-    shadowColor: "#000",
+    borderColor: colors.glassBorder,
+    shadowColor: colors.shadowColor,
     shadowOffset: {
       width: 0,
       height: 10,
@@ -146,7 +144,7 @@ export const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.7)",
+    color: colors.textSecondary,
     marginBottom: 8,
     marginLeft: 4,
   },
@@ -154,10 +152,10 @@ export const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    backgroundColor: colors.inputBackground,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.15)",
+    borderColor: colors.inputBorder,
     paddingHorizontal: 16,
   },
 
@@ -169,7 +167,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 18,
     fontSize: 16,
-    color: "#FFF",
+    color: colors.textPrimary,
   },
 
   passwordInput: {
@@ -183,7 +181,7 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.accent,
     paddingVertical: 18,
     paddingHorizontal: 32,
     borderRadius: 16,
@@ -192,7 +190,7 @@ export const styles = StyleSheet.create({
     marginTop: 8,
     flexDirection: "row",
     gap: 8,
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 8,
@@ -216,12 +214,12 @@ export const styles = StyleSheet.create({
 
   textLogin: {
     fontSize: 15,
-    color: "rgba(255, 255, 255, 0.7)",
+    color: colors.textSecondary,
     fontWeight: "400",
   },
 
   textLoginStrong: {
-    color: "#DC143C",
+    color: colors.accent,
     fontWeight: "700",
   },
 });

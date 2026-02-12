@@ -62,7 +62,6 @@ export const createStyles = (colors: any) =>
       width: 40,
       height: 40,
       borderRadius: 12,
-      backgroundColor: "rgba(255,255,255,0.12)",
       alignItems: "center",
       justifyContent: "center",
     },
@@ -222,7 +221,7 @@ export const createStyles = (colors: any) =>
     },
 
     emptyButtonText: {
-      color: "#fff",
+      color: colors.textPrimary,
       fontSize: 16,
       fontWeight: "700",
     },

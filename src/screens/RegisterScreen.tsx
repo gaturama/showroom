@@ -13,10 +13,12 @@ import {
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
-import { styles } from "../styles/stylesRegister";
 import { Ionicons } from "@expo/vector-icons";
 import CustomAlert from "../components/CustomAlert";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+import { useThemedStyles } from "../hooks/useThemedStyles";
+import { createStyles } from "../styles/stylesRegister";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Register">;
 
@@ -32,6 +34,8 @@ export default function RegisterScreen({ navigation }: Props) {
   const [alertMessage, setAlertMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const { colors } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const { register } = useAuth();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -120,7 +124,7 @@ export default function RegisterScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#DC143C" />
+      <StatusBar barStyle="light-content" backgroundColor={colors.accentLight} />
 
       <View style={styles.header}>
         <TouchableOpacity
@@ -171,14 +175,14 @@ export default function RegisterScreen({ navigation }: Props) {
                   <Ionicons
                     name="person-outline"
                     size={20}
-                    color="rgba(255, 255, 255, 0.6)"
+                    color={colors.textSecondary}
                     style={styles.inputIcon}
                   />
                   <TextInput
                     autoCorrect={false}
                     autoCapitalize="words"
                     placeholder="Seu nome"
-                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                    placeholderTextColor={colors.textSecondary}
                     value={name}
                     onChangeText={setName}
                     style={styles.input}
@@ -193,14 +197,14 @@ export default function RegisterScreen({ navigation }: Props) {
                   <Ionicons
                     name="mail-outline"
                     size={20}
-                    color="rgba(255, 255, 255, 0.6)"
+                    color={colors.textSecondary}
                     style={styles.inputIcon}
                   />
                   <TextInput
                     autoCorrect={false}
                     autoCapitalize="none"
                     placeholder="seu@email.com"
-                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                    placeholderTextColor={colors.textSecondary}
                     value={email}
                     onChangeText={setEmail}
                     style={styles.input}
@@ -216,14 +220,14 @@ export default function RegisterScreen({ navigation }: Props) {
                   <Ionicons
                     name="call-outline"
                     size={20}
-                    color="rgba(255, 255, 255, 0.6)"
+                    color={colors.textSecondary}
                     style={styles.inputIcon}
                   />
                   <TextInput
                     autoCorrect={false}
                     autoCapitalize="none"
                     placeholder="(00) 00000-0000"
-                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                    placeholderTextColor={colors.textSecondary}
                     value={phone}
                     onChangeText={setPhone}
                     style={styles.input}
@@ -239,14 +243,14 @@ export default function RegisterScreen({ navigation }: Props) {
                   <Ionicons
                     name="calendar-outline"
                     size={20}
-                    color="rgba(255, 255, 255, 0.6)"
+                    color={colors.textSecondary}
                     style={styles.inputIcon}
                   />
                   <TextInput
                     autoCorrect={false}
                     autoCapitalize="none"
                     placeholder="DD/MM/AAAA"
-                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                    placeholderTextColor={colors.textSecondary}
                     value={dateBirth}
                     onChangeText={setDateBirth}
                     style={styles.input}
@@ -262,15 +266,14 @@ export default function RegisterScreen({ navigation }: Props) {
                   <Ionicons
                     name="lock-closed-outline"
                     size={20}
-                    color="rgba(255, 255, 255, 0.6)"
+                    color={colors.textSecondary}
                     style={styles.inputIcon}
                   />
                   <TextInput
                     autoCorrect={false}
                     autoCapitalize="none"
                     placeholder="••••••••"
-                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
-                    value={password}
+                    placeholderTextColor={colors.textSecondary}
                     onChangeText={setPassword}
                     style={[styles.input, styles.passwordInput]}
                     secureTextEntry={!showPassword}
@@ -297,7 +300,7 @@ export default function RegisterScreen({ navigation }: Props) {
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <ActivityIndicator color="#fff" size="small" />
+                  <ActivityIndicator color={colors.textPrimary} size="small" />
                 ) : (
                   <>
                     <Text style={styles.buttonText}>Criar Conta</Text>

@@ -8,9 +8,10 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "../context/ThemeContext";
 
 export type SortOption = "price-asc" | "price-desc" | "hp-asc" | "hp-desc" | "speed-desc" | "year-desc" | "year-asc";
-export type BrandFilter = "all" | "Porsche" | "Ferrari" | "Lamborghini" | "Mercedes-AMG" | "Audi" | "Bentley" | "Koenigsegg" | "BMW" | "McLaren"| "Aston Martin" | "Bugatti" | "Chevrolet" | "Dodge" | "Ford" | "Nissan";
+export type BrandFilter = "all" | "Porsche" | "Ferrari" | "Lamborghini" | "Mercedes-AMG" | "Audi" | "Bentley" | "Koenigsegg" | "BMW" | "McLaren";
 
 interface FilterModalProps {
   visible: boolean;
@@ -35,6 +36,8 @@ export const FilterModal: React.FC<FilterModalProps> = ({
   onApply,
   onReset,
 }) => {
+  const { colors } = useTheme();
+
   const sortOptions: { value: SortOption; label: string; icon: string }[] = [
     { value: "price-asc", label: "Menor Preço", icon: "arrow-up" },
     { value: "price-desc", label: "Maior Preço", icon: "arrow-down" },
@@ -42,7 +45,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
     { value: "hp-desc", label: "Maior Potência", icon: "flash" },
     { value: "speed-desc", label: "Mais Rápido", icon: "speedometer" },
     { value: "year-desc", label: "Mais Novo", icon: "calendar" },
-    { value: "year-asc", label: "Mais velho", icon: "calendar" },
+    { value: "year-asc", label: "Mais Antigo", icon: "calendar-outline" },
   ];
 
   const brands: BrandFilter[] = [
@@ -56,13 +59,9 @@ export const FilterModal: React.FC<FilterModalProps> = ({
     "Koenigsegg",
     "BMW",
     "McLaren",
-    "Aston Martin",
-    "Bugatti",
-    "Chevrolet",
-    "Dodge",
-    "Ford",
-    "Nissan",
   ];
+
+  const styles = createStyles(colors);
 
   return (
     <Modal
@@ -76,7 +75,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
           <View style={styles.header}>
             <Text style={styles.headerTitle}>Filtros e Ordenação</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Ionicons name="close" size={28} color="#fff" />
+              <Ionicons name="close" size={28} color={colors.textPrimary} />
             </TouchableOpacity>
           </View>
 
@@ -95,7 +94,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
                   <Ionicons
                     name={option.icon as any}
                     size={20}
-                    color={sortBy === option.value ? "#DC143C" : "rgba(255, 255, 255, 0.7)"}
+                    color={sortBy === option.value ? colors.accent : colors.textSecondary}
                   />
                   <Text
                     style={[
@@ -106,7 +105,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
                     {option.label}
                   </Text>
                   {sortBy === option.value && (
-                    <Ionicons name="checkmark-circle" size={20} color="#DC143C" />
+                    <Ionicons name="checkmark-circle" size={20} color={colors.accent} />
                   )}
                 </TouchableOpacity>
               ))}
@@ -140,7 +139,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
 
           <View style={styles.footer}>
             <TouchableOpacity style={styles.resetButton} onPress={onReset}>
-              <Ionicons name="refresh" size={20} color="#DC143C" />
+              <Ionicons name="refresh" size={20} color={colors.accent} />
               <Text style={styles.resetButtonText}>Limpar</Text>
             </TouchableOpacity>
 
@@ -155,20 +154,21 @@ export const FilterModal: React.FC<FilterModalProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.85)",
     justifyContent: "flex-end",
+    alignSelf: "flex-end",
   },
 
   modalContainer: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: colors.surface,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     maxHeight: "85%",
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: colors.glassBorder,
   },
 
   header: {
@@ -179,13 +179,13 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "rgba(255, 255, 255, 0.1)",
+    borderBottomColor: colors.glassBorder,
   },
 
   headerTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#fff",
+    color: colors.textPrimary,
     letterSpacing: 0.3,
   },
 
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: colors.inputBackground,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#fff",
+    color: colors.textPrimary,
     marginBottom: 16,
     letterSpacing: 0.3,
   },
@@ -219,29 +219,29 @@ const styles = StyleSheet.create({
   optionButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.glassBackground,
     padding: 16,
     borderRadius: 12,
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: colors.glassBorder,
   },
 
   optionButtonActive: {
-    backgroundColor: "rgba(220, 20, 60, 0.15)",
-    borderColor: "#DC143C",
+    backgroundColor: colors.accentLight,
+    borderColor: colors.accent,
   },
 
   optionText: {
     flex: 1,
     fontSize: 16,
-    color: "rgba(255, 255, 255, 0.8)",
+    color: colors.textSecondary,
     marginLeft: 12,
     fontWeight: "500",
   },
 
   optionTextActive: {
-    color: "#fff",
+    color: colors.textPrimary,
     fontWeight: "700",
   },
 
@@ -255,19 +255,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.glassBackground,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: colors.glassBorder,
   },
 
   brandChipActive: {
-    backgroundColor: "#DC143C",
-    borderColor: "#DC143C",
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
 
   brandChipText: {
     fontSize: 14,
-    color: "rgba(255, 255, 255, 0.8)",
+    color: colors.textSecondary,
     fontWeight: "500",
   },
 
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     borderTopWidth: 1,
-    borderTopColor: "rgba(255, 255, 255, 0.1)",
+    borderTopColor: colors.glassBorder,
     gap: 12,
   },
 
@@ -294,16 +294,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 16,
     borderRadius: 12,
-    backgroundColor: "rgba(220, 20, 60, 0.1)",
+    backgroundColor: colors.accentLight,
     borderWidth: 1,
-    borderColor: "#DC143C",
+    borderColor: colors.accent,
     gap: 8,
   },
 
   resetButtonText: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#DC143C",
+    color: colors.accent,
   },
 
   applyButton: {
@@ -313,9 +313,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 16,
     borderRadius: 12,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.accent,
     gap: 8,
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 4,

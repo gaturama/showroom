@@ -1,6 +1,7 @@
 import React from "react";
 import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "../context/ThemeContext";
 
 interface SearchBarProps {
   value: string;
@@ -13,32 +14,33 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   value,
   onChangeText,
   onClear,
-  placeholder = "Buscar carros",
+  placeholder = "Buscar carros...",
 }) => {
+  const { colors } = useTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { 
+      backgroundColor: colors.inputBackground,
+      borderColor: colors.inputBorder 
+    }]}>
       <Ionicons
         name="search"
         size={20}
-        color="black"
+        color={colors.textSecondary}
         style={styles.searchIcon}
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.textPrimary }]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor="black"
+        placeholderTextColor={colors.placeholder}
         autoCorrect={false}
         autoCapitalize="none"
       />
       {value.length > 0 && (
         <TouchableOpacity onPress={onClear} style={styles.clearButton}>
-          <Ionicons
-            name="close-circle"
-            size={20}
-            color="black"
-          />
+          <Ionicons name="close-circle" size={20} color={colors.textSecondary} />
         </TouchableOpacity>
       )}
     </View>
@@ -49,11 +51,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
     borderRadius: 16,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: "rgba(0, 0, 0, 0.15)",
     marginHorizontal: 16,
     marginVertical: 12,
   },
@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
 
   input: {
     flex: 1,
-    color: "#fff",
     fontSize: 16,
     paddingVertical: 14,
   },

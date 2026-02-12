@@ -10,9 +10,17 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { CarImageCarousel } from "../components/CarCarousel";
-import { styles } from "../styles/stylesCarDetails";
 import { Ionicons } from "@expo/vector-icons";
 import { useFavorites } from "../components/Favorites";
+import { useTheme } from "../context/ThemeContext";
+import { useThemedStyles } from "../hooks/useThemedStyles";
+import { createStyles } from "../styles/stylesCarDetails";
+
+interface SpecRowProps {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  value: string;
+}
 
 type Props = NativeStackScreenProps<RootStackParamList, "CarDetails">;
 
@@ -20,6 +28,9 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
   const { car } = route.params;
   const { isFavorite, toggleFavorite } = useFavorites();
   const [favorites, setFavorites] = useState(isFavorite(car.id));
+
+  const { colors } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
@@ -44,6 +55,16 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
   useEffect(() => {
     setFavorites(isFavorite(car.id));
   }, [car.id, isFavorite]);
+  
+  const SpecRow: React.FC<SpecRowProps> = ({ icon, label, value }) => (
+    <View style={styles.specRow}>
+      <View style={styles.specLeft}>
+        <Ionicons name={icon} size={20} color={colors.textPrimary} />
+        <Text style={styles.specLabel}>{label}</Text>
+      </View>
+      <Text style={styles.specValue}>{value}</Text>
+    </View>
+  );
 
   const handleToggleFavorite = () => {
     Animated.sequence([
@@ -65,7 +86,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#DC143C" />
+      <StatusBar barStyle={colors.statusBarStyle} backgroundColor={colors.accent} />
 
       <View style={styles.header}>
         <View
@@ -84,7 +105,6 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
               width: 40,
               height: 40,
               borderRadius: 12,
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -109,9 +129,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
               width: 40,
               height: 40,
               borderRadius: 12,
-              backgroundColor: favorites
-                ? "rgba(220, 20, 60, 0.2)"
-                : "rgba(255, 255, 255, 0.1)",
+              backgroundColor: colors.accentLight,
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -267,18 +285,3 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
   );
 }
 
-interface SpecRowProps {
-  icon: keyof typeof Ionicons.glyphMap;
-  label: string;
-  value: string;
-}
-
-const SpecRow: React.FC<SpecRowProps> = ({ icon, label, value }) => (
-  <View style={styles.specRow}>
-    <View style={styles.specLeft}>
-      <Ionicons name={icon} size={20} color="rgba(255, 255, 255, 0.6)" />
-      <Text style={styles.specLabel}>{label}</Text>
-    </View>
-    <Text style={styles.specValue}>{value}</Text>
-  </View>
-);

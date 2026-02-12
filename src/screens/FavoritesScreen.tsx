@@ -9,10 +9,12 @@ import {
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
-import { styles } from "../styles/stylesFavorites";
 import { useFavorites } from "../components/Favorites";
 import { CarCard } from "../components/CarCard";
 import { Ionicons } from "@expo/vector-icons";
+import { createStyles } from "../styles/stylesFavorites";
+import { useTheme } from "../context/ThemeContext";
+import { useThemedStyles } from "../hooks/useThemedStyles";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Favorites">;
 
@@ -20,6 +22,9 @@ export default function FavoritesScreen({ navigation }: Props) {
   const { favorites } = useFavorites();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(-20)).current;
+
+  const { colors } = useTheme();
+  const styles = useThemedStyles(createStyles);
 
   useEffect(() => {
     Animated.parallel([
@@ -82,7 +87,7 @@ export default function FavoritesScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#DC143C" />
+      <StatusBar barStyle={colors.statusBarStyle} backgroundColor={colors.accent} />
 
       <View style={styles.backgroundParticles}>
         <Animated.View style={[styles.particle, styles.particle1]} />
@@ -135,7 +140,7 @@ export default function FavoritesScreen({ navigation }: Props) {
           ]}
         >
           <View style={styles.statItem}>
-            <Ionicons name="heart" size={20} color="#DC143C" />
+            <Ionicons name="heart" size={20} color={colors.accent} />
             <Text style={styles.statNumber}>{favorites.length}</Text>
             <Text style={styles.statLabel}>
               {favorites.length === 1 ? "Favorito" : "Favoritos"}
@@ -143,7 +148,7 @@ export default function FavoritesScreen({ navigation }: Props) {
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
-            <Ionicons name="speedometer" size={20} color="#DC143C" />
+            <Ionicons name="speedometer" size={20} color={colors.accent} />
             <Text style={styles.statNumber}>
               {favorites.reduce((acc, car) => acc + car.horsepower, 0)}
             </Text>
@@ -151,7 +156,7 @@ export default function FavoritesScreen({ navigation }: Props) {
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
-            <Ionicons name="cash" size={20} color="#DC143C" />
+            <Ionicons name="cash" size={20} color={colors.accent} />
             <Text style={styles.statNumber}>
               R${" "}
               {(

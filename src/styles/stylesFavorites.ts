@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
+    backgroundColor: colors.background,
   },
 
   backgroundParticles: {
@@ -21,10 +21,10 @@ export const styles = StyleSheet.create({
   particle1: {
     width: 300,
     height: 300,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.particleColor,
     top: "8%",
     left: "-25%",
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 100,
@@ -34,10 +34,10 @@ export const styles = StyleSheet.create({
   particle2: {
     width: 250,
     height: 250,
-    backgroundColor: "#FF6B6B",
+    backgroundColor: colors.particleColorSecondary,
     top: "45%",
     right: "-20%",
-    shadowColor: "#FF6B6B",
+    shadowColor: colors.particleColorSecondary,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
     shadowRadius: 80,
@@ -47,10 +47,10 @@ export const styles = StyleSheet.create({
   particle3: {
     width: 200,
     height: 200,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.particleColor,
     bottom: "12%",
     left: "25%",
-    shadowColor: "#DC143C",
+    shadowColor: colors.particleColor,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.7,
     shadowRadius: 90,
@@ -64,8 +64,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 50,
     paddingBottom: 16,
-    backgroundColor: "#DC143C",
-    shadowColor: "#DC143C",
+    backgroundColor: colors.accent,
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -103,10 +103,10 @@ export const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
     padding: 16,
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.background,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: colors.glassBorder,
   },
 
   statItem: {
@@ -117,19 +117,19 @@ export const styles = StyleSheet.create({
   statNumber: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#DC143C",
+    color: colors.accent,
   },
 
   statLabel: {
     fontSize: 11,
-    color: "rgba(255, 255, 255, 0.6)",
+    color: colors.textSecondary,
     fontWeight: "500",
   },
 
   statDivider: {
     width: 1,
     height: 40,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: colors.background,
   },
 
   listContent: {
@@ -148,18 +148,18 @@ export const styles = StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.background,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 32,
     borderWidth: 2,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: colors.glassBorder,
   },
 
   emptyTitle: {
     fontSize: 28,
     fontWeight: "700",
-    color: "#fff",
+    color: colors.textPrimary,
     marginBottom: 16,
     textAlign: "center",
     letterSpacing: 0.3,
@@ -167,7 +167,7 @@ export const styles = StyleSheet.create({
 
   emptyText: {
     fontSize: 16,
-    color: "rgba(255, 255, 255, 0.6)",
+    color: colors.textSecondary,
     textAlign: "center",
     lineHeight: 24,
     marginBottom: 32,
@@ -176,11 +176,11 @@ export const styles = StyleSheet.create({
   emptyButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.accent,
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 16,
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 8,
