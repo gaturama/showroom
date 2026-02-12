@@ -11,6 +11,7 @@ import FavoritesScreen from "./src/screens/FavoritesScreen";
 import { FavoritesProvider } from "./src/components/Favorites";
 import { AuthProvider } from "./src/context/AuthContext";
 import { ThemeProvider } from "./src/context/ThemeContext";
+import CompareScreen from "./src/screens/CompareScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -50,6 +51,11 @@ export default function App() {
                 name="Favorites"
                 component={FavoritesScreen}
                 options={{ headerShown: false }}
+              />
+              <Stack.Screen 
+                name="Compare"
+                component={CompareScreen}
+                options={{ headerShown: false}}
               />
             </Stack.Navigator>
           </NavigationContainer>

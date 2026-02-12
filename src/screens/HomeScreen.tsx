@@ -208,6 +208,15 @@ export default function HomeScreen({ navigation }: Props) {
           )}
         </TouchableOpacity>
 
+        {/* Botão de Comparação */}
+        <TouchableOpacity
+          style={styles.compareButton}
+          onPress={() => navigation.navigate("Compare")}
+        >
+          <Ionicons name="git-compare" size={18} color={colors.accent} />
+          <Text style={styles.compareButtonText}>Comparar</Text>
+        </TouchableOpacity>
+
         <View style={styles.resultCount}>
           <Text style={styles.resultCountText}>
             {filteredAndSortedCars.length}{" "}

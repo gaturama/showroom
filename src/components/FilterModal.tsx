@@ -169,6 +169,8 @@ const createStyles = (colors: any) => StyleSheet.create({
     maxHeight: "85%",
     borderWidth: 1,
     borderColor: colors.glassBorder,
+    paddingBottom: 0,
+    overflow: 'hidden',
   },
 
   header: {

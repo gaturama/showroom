@@ -1,11 +1,9 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 
-const { width, height } = Dimensions.get("window");
-
-export const styles = StyleSheet.create({
+export const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
+    backgroundColor: colors.background,
   },
 
   header: {
@@ -15,8 +13,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 50,
     paddingBottom: 16,
-    backgroundColor: "#DC143C",
-    shadowColor: "#DC143C",
+    backgroundColor: colors.accent,
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -57,40 +55,25 @@ export const styles = StyleSheet.create({
   particle1: {
     width: 280,
     height: 280,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.particleColor,
     top: "20%",
     left: "-25%",
-    shadowColor: "#DC143C",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 100,
-    elevation: 10,
   },
 
   particle2: {
     width: 220,
     height: 220,
-    backgroundColor: "#FF6B6B",
+    backgroundColor: colors.particleColorSecondary,
     top: "55%",
     right: "-20%",
-    shadowColor: "#FF6B6B",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 80,
-    elevation: 8,
   },
 
   particle3: {
     width: 180,
     height: 180,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.particleColor,
     bottom: "8%",
     left: "30%",
-    shadowColor: "#DC143C",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.7,
-    shadowRadius: 90,
-    elevation: 9,
   },
 
   scrollContent: {
@@ -113,12 +96,12 @@ export const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: colors.glassBackground,
     borderWidth: 3,
-    borderColor: "rgba(220, 20, 60, 0.3)",
+    borderColor: colors.accentLight,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 8,
@@ -128,6 +111,12 @@ export const styles = StyleSheet.create({
     elevation: 10,
   },
 
+  avatarText: {
+    fontSize: 40,
+    color: colors.accent,
+    fontWeight: "700",
+  },
+
   avatarEditButton: {
     position: "absolute",
     bottom: 0,
@@ -135,43 +124,66 @@ export const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.accent,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 3,
-    borderColor: "#121212",
-    shadowColor: "#DC143C",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
-    elevation: 8,
+    borderColor: colors.background,
   },
 
   avatarLabel: {
     fontSize: 14,
-    color: "rgba(255, 255, 255, 0.6)",
+    color: colors.textSecondary,
     marginBottom: 28,
     fontWeight: "500",
   },
 
   glassCard: {
     width: "100%",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: colors.glassBackground,
     borderRadius: 28,
     padding: 24,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
-    shadowColor: "#000",
+    borderColor: colors.glassBorder,
+    shadowColor: colors.shadowColor,
     shadowOffset: {
       width: 0,
       height: 10,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowRadius: 20,
     elevation: 15,
+  },
+
+  themeSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 16,
+  },
+
+  themeSectionLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+
+  themeSectionTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: colors.textPrimary,
+  },
+
+  themeSectionSubtitle: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: colors.glassBorder,
+    marginVertical: 20,
   },
 
   inputContainer: {
@@ -181,7 +193,7 @@ export const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.7)",
+    color: colors.textSecondary,
     marginBottom: 8,
     marginLeft: 4,
   },
@@ -189,10 +201,10 @@ export const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    backgroundColor: colors.inputBackground,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.15)",
+    borderColor: colors.inputBorder,
     paddingHorizontal: 16,
   },
 
@@ -204,7 +216,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 18,
     fontSize: 16,
-    color: "#FFF",
+    color: colors.textPrimary,
   },
 
   passwordInput: {
@@ -218,7 +230,7 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#DC143C",
+    backgroundColor: colors.accent,
     paddingVertical: 18,
     paddingHorizontal: 32,
     borderRadius: 16,
@@ -226,7 +238,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 8,
     flexDirection: "row",
-    shadowColor: "#DC143C",
+    shadowColor: colors.accent,
     shadowOffset: {
       width: 0,
       height: 8,
@@ -247,7 +259,7 @@ export const styles = StyleSheet.create({
     marginTop: 28,
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: "rgba(255, 255, 255, 0.1)",
+    borderTopColor: colors.glassBorder,
   },
 
   optionButton: {
@@ -260,7 +272,7 @@ export const styles = StyleSheet.create({
   optionText: {
     flex: 1,
     fontSize: 16,
-    color: "rgba(255, 255, 255, 0.8)",
+    color: colors.textPrimary,
     marginLeft: 12,
     fontWeight: "500",
   },
@@ -272,14 +284,14 @@ export const styles = StyleSheet.create({
     paddingVertical: 16,
     marginTop: 12,
     borderRadius: 12,
-    backgroundColor: "rgba(220, 20, 60, 0.1)",
+    backgroundColor: colors.accentLight,
     borderWidth: 1,
-    borderColor: "rgba(220, 20, 60, 0.3)",
+    borderColor: colors.accent + "40",
   },
 
   logoutText: {
     fontSize: 16,
-    color: "#DC143C",
+    color: colors.accent,
     fontWeight: "600",
     marginLeft: 8,
   },

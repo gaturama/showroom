@@ -9,4 +9,5 @@ export type RootStackParamList = {
         car: Car;
     };
     Favorites: undefined;
+    Compare: undefined;
 };
