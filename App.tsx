@@ -12,6 +12,7 @@ import { FavoritesProvider } from "./src/components/Favorites";
 import { AuthProvider } from "./src/context/AuthContext";
 import { ThemeProvider } from "./src/context/ThemeContext";
 import CompareScreen from "./src/screens/CompareScreen";
+import { RatingsProvider } from "./src/context/RatingsContext";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -20,45 +21,47 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <FavoritesProvider>
-          <NavigationContainer>
-            <Stack.Navigator initialRouteName="Login" id={undefined}>
-              <Stack.Screen
-                name="Login"
-                component={LoginScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Register"
-                component={RegisterScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Home"
-                component={HomeScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Profile"
-                component={ProfileScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="CarDetails"
-                component={CarDetailsScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Favorites"
-                component={FavoritesScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen 
-                name="Compare"
-                component={CompareScreen}
-                options={{ headerShown: false}}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
+          <RatingsProvider>
+            <NavigationContainer>
+              <Stack.Navigator initialRouteName="Login" id={undefined}>
+                <Stack.Screen
+                  name="Login"
+                  component={LoginScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Register"
+                  component={RegisterScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Home"
+                  component={HomeScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Profile"
+                  component={ProfileScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="CarDetails"
+                  component={CarDetailsScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Favorites"
+                  component={FavoritesScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Compare"
+                  component={CompareScreen}
+                  options={{ headerShown: false }}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </RatingsProvider>
         </FavoritesProvider>
       </AuthProvider>
     </ThemeProvider>

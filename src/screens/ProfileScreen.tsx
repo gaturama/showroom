@@ -299,7 +299,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   <TextInput
                     autoCorrect={false}
                     autoCapitalize="none"
-                    placeholder="Deixe vazio para manter a senha atual"
+                    placeholder="*********"
                     placeholderTextColor={colors.placeholder}
                     value={password}
                     onChangeText={setPassword}

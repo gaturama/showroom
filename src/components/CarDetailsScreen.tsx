@@ -15,6 +15,7 @@ import { useFavorites } from "../components/Favorites";
 import { useTheme } from "../context/ThemeContext";
 import { useThemedStyles } from "../hooks/useThemedStyles";
 import { createStyles } from "../styles/stylesCarDetails";
+import { RatingsSection } from "../components/RatingsSection";
 
 interface SpecRowProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -55,7 +56,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
   useEffect(() => {
     setFavorites(isFavorite(car.id));
   }, [car.id, isFavorite]);
-  
+
   const SpecRow: React.FC<SpecRowProps> = ({ icon, label, value }) => (
     <View style={styles.specRow}>
       <View style={styles.specLeft}>
@@ -86,7 +87,10 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle={colors.statusBarStyle} backgroundColor={colors.accent} />
+      <StatusBar
+        barStyle={colors.statusBarStyle}
+        backgroundColor={colors.accent}
+      />
 
       <View style={styles.header}>
         <View
@@ -269,6 +273,11 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
             </View>
           </View>
 
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Avaliações</Text>
+            <RatingsSection car={car} />
+          </View>
+
           <TouchableOpacity
             style={styles.actionContainer}
             activeOpacity={0.8}
@@ -284,4 +293,3 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
     </View>
   );
 }
-
