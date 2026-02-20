@@ -10,7 +10,6 @@ export const createStyles = (colors: any) => StyleSheet.create({
     backgroundColor: colors.background,
   },
 
-  // Background Particles
   backgroundParticles: {
     position: "absolute",
     width: "100%",
@@ -47,7 +46,6 @@ export const createStyles = (colors: any) => StyleSheet.create({
     right: "20%",
   },
 
-  // Header Glass
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -103,7 +101,6 @@ export const createStyles = (colors: any) => StyleSheet.create({
     letterSpacing: 0.3,
   },
 
-  // Filter Row
   filterRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -158,7 +155,6 @@ export const createStyles = (colors: any) => StyleSheet.create({
     fontWeight: "600",
   },
 
-  // Stats Bar
   statsBar: {
     flexDirection: "row",
     alignItems: "center",
@@ -195,13 +191,11 @@ export const createStyles = (colors: any) => StyleSheet.create({
     backgroundColor: colors.glassBorder,
   },
 
-  // List Content
   listContent: {
     paddingVertical: 16,
     paddingBottom: 24,
   },
 
-  // Empty State
   emptyState: {
     flex: 1,
     justifyContent: "center",
@@ -235,5 +229,17 @@ export const createStyles = (colors: any) => StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "700",
+  },
+
+  badge: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

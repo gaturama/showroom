@@ -21,6 +21,7 @@ import { RatingsSection } from "../components/RatingsSection";
 import { ShareModal } from "../components/ShareModal";
 import { ImageGalleryModal } from "../components/ImageGalleryModal";
 import { useUnsplash } from "../context/UnsplashContext";
+import { useViewHistory } from "../context/ViewHistoryContext";
 
 interface SpecRowProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -37,6 +38,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
   const [shareModalVisible, setShareModalVisible] = useState(false);
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const { addToHistory } = useViewHistory();
 
   const {
     getCarImages,
@@ -74,6 +76,10 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
   useEffect(() => {
     setFavorites(isFavorite(car.id));
   }, [car.id, isFavorite]);
+
+  useEffect(() => {
+    addToHistory(car);
+  }, [car.id]);
 
   const loadUnsplashImages = async () => {
     try {

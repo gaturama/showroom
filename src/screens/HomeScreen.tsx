@@ -30,6 +30,7 @@ export default function HomeScreen({ navigation }: Props) {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("price-desc");
   const [brandFilter, setBrandFilter] = useState<BrandFilter>("all");
+  const [viewHistory, setViewHistory] = useState<Car[]>([]);
 
   const styles = useThemedStyles(createStyles);
 
@@ -167,6 +168,15 @@ export default function HomeScreen({ navigation }: Props) {
 
         <TouchableOpacity onPress={handleProfile} style={styles.headerButton}>
           <Ionicons name="person-circle" size={28} color="white" />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("History")}>
+          <Ionicons name="time" size={24} color="#fff"/>
+          {viewHistory.length > 0 && (
+            <View style={styles.badge}>
+              <Text>{viewHistory.length}</Text>
+            </View>
+          )}
         </TouchableOpacity>
       </Animated.View>
 
