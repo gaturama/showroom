@@ -19,11 +19,6 @@ export const MOCK_CARS: Car[] = [
     price: 1200000,
     description:
       "O Nissan Skyline GT-R R34 é um ícone absoluto da cultura automotiva — um carro que transcendeu gerações, pistas e videogames para se tornar lenda. Sob o capô, o lendário RB26DETT, um seis-cilindros em linha biturbo, entrega potência com enorme margem para preparação, acompanhado do avançado sistema de tração integral ATTESA E-TS, garantindo tração e controle impecáveis.",
-    images: [
-      require("../assets/skyline_front.jpg"),
-      require("../assets/skyline_side.jpg"),
-      require("../assets/skyline_back.jpg"),
-    ],
   },
   {
     id: "2",
@@ -43,11 +38,6 @@ export const MOCK_CARS: Car[] = [
     price: 1800000,
     description:
       "O Porsche 911 Turbo S representa o ápice da engenharia esportiva alemã. Com seu icônico motor boxer de seis cilindros biturbo montado na traseira, oferece uma experiência de condução incomparável. Combina luxo refinado com desempenho brutal, sendo capaz de surpreender tanto em pistas quanto no uso diário.",
-    images: [
-      require("../assets/porsche_turbo_s_front.jpg"),
-      require("../assets/porsche_turbo_s_back.jpg"),
-      require("../assets/porsche_turbo_s_side.jpg"),
-    ],
   },
   {
     id: "3",
@@ -67,11 +57,6 @@ export const MOCK_CARS: Car[] = [
     price: 4200000,
     description:
       "A Ferrari F8 Tributo é uma homenagem ao motor V8 mais premiado da história da Ferrari. Com design aerodinâmico agressivo e tecnologia de ponta, este superesportivo italiano oferece uma experiência visceral de pilotagem. Cada detalhe foi pensado para maximizar performance e emoção.",
-    images: [
-      require("../assets/ferrari_f8_front.jpg"),
-      require("../assets/ferrari_f8_back.jpg"),
-      require("../assets/ferrari_f8_side.jpg"),
-    ],
   },
   {
     id: "4",
@@ -91,11 +76,6 @@ export const MOCK_CARS: Car[] = [
     price: 3800000,
     description:
       "O Lamborghini Huracán EVO traz o DNA da marca italiana de forma ainda mais evoluída. Seu motor V10 de aspiração natural entrega um som inconfundível, enquanto a tecnologia LDVI (Lamborghini Dinamica Veicolo Integrata) antecipa suas necessidades e otimiza o desempenho em tempo real.",
-    images: [
-      require("../assets/lamborghini_huracan_front.jpg"),
-      require("../assets/lamborghini_huracan_back.jpg"),
-      require("../assets/lamborghini_huracan.jpg"),
-    ],
   },
   {
     id: "5",
@@ -115,11 +95,6 @@ export const MOCK_CARS: Car[] = [
     price: 1950000,
     description:
       'O Mercedes-AMG GT R, apelidado de "A Fera do Inferno Verde", foi desenvolvido e afinado em Nürburgring. Com suspensão adaptativa, aerodinâmica ativa e um motor V8 biturbo devastador, oferece o equilíbrio perfeito entre conforto e performance extrema.',
-    images: [
-      require("../assets/mercedes_amg_gt_front.jpg"),
-      require("../assets/mercedes_amg_gt_side.jpg"),
-      require("../assets/mercedes_amg_gt.jpg"),
-    ],
   },
   {
     id: "6",
@@ -139,11 +114,6 @@ export const MOCK_CARS: Car[] = [
     price: 1700000,
     description:
       "O Audi R8 V10 Performance combina a tecnologia de corrida da Audi Sport com o luxo característico da marca alemã. Compartilha o motor com o Lamborghini Huracán, mas oferece uma experiência mais refinada e cotidiana. O sistema Quattro garante tração excepcional em qualquer condição.",
-    images: [
-      require("../assets/audi_r8_back.jpg"),
-      require("../assets/audi_r8_front.jpg"),
-      require("../assets/audi_r8_side.jpg"),
-    ],
   },
   {
     id: "7",
@@ -163,11 +133,6 @@ export const MOCK_CARS: Car[] = [
     price: 2000000,
     description:
       "O Bentley Continental GT V8 é a definição de luxo com alma esportiva. Debaixo do capô, o motor V8 biturbo entrega potência e torque de sobra, garantindo acelerações fortes e um ronco marcante — tudo isso sem abrir mão da suavidade característica da Bentley.",
-    images: [
-      require("../assets/bentley_frontSide.jpg"),
-      require("../assets/bentley_back.jpg"),
-      require("../assets/bentley_side.jpg"),
-    ],
   },
   {
     id: "8",
@@ -187,11 +152,6 @@ export const MOCK_CARS: Car[] = [
     price: 30000000,
     description:
       "O Koenigsegg Regera é o ápice da engenharia automotiva moderna — um hipercarro híbrido sueco que redefine o que significa desempenho sem concessões. Com um sistema híbrido inovador combinando um motor V8 twin-turbo de alta potência com motores elétricos integrados, o Regera entrega uma aceleração brutal, torque instantâneo e tecnologia de transmissão direta que elimina a necessidade de uma caixa de câmbio tradicional.",
-    images: [
-      require("../assets/koenigsegg_regera_back.jpg"),
-      require("../assets/koenigsegg_regera_front.jpg"),
-      require("../assets/koenigsegg_regera_side.jpg"),
-    ],
   },
   {
     id: "9",
@@ -211,11 +171,6 @@ export const MOCK_CARS: Car[] = [
     price: 649900,
     description:
       "O BMW M3 Competition é a síntese perfeita entre desempenho bruto e usabilidade diária. Com um motor twin-turbo de 6 cilindros em linha que entrega uma potência vigorosa e um som inconfundível, essa versão Competition eleva o M3 a um patamar ainda mais esportivo — resposta instantânea do acelerador, aceleração feroz e controle preciso em qualquer curva.",
-    images: [
-      require("../assets/bmw_m3_frontSide.jpg"),
-      require("../assets/bmw_m3_back.jpg"),
-      require("../assets/bmw_m3_side.jpg"),
-    ],
   },
   {
     id: "10",
@@ -235,11 +190,6 @@ export const MOCK_CARS: Car[] = [
     price: 14000000,
     description:
       "O McLaren Senna é a mais pura expressão da obsessão pela performance — um hipercarro projetado para dominar pistas, inspirado no lendário piloto Ayrton Senna. Com um motor V8 biturbo de alta rotação e uma relação peso-potência impressionante, ele entrega aceleração visceral, respostas instantâneas e performance cirúrgica em cada curva.",
-    images: [
-      require("../assets/mcLaren_Senna_front.jpg"),
-      require("../assets/mcLaren_Senna_side.jpg"),
-      require("../assets/mcLaren_Senna_back.jpg"),
-    ],
   },
   {
     id: "11",
@@ -259,11 +209,6 @@ export const MOCK_CARS: Car[] = [
     price: 545000,
     description:
       "O Ford Mustang GT Performance é a expressão mais visceral da tradição americana de muscle cars: um carro que combina potência bruta, presença dominante e emoção ao volante. No coração dele está o icônico motor V8 5.0 L, oferecendo um roar profundo e uma entrega de potência que empurra com autoridade em qualquer faixa de rotação.",
-    images: [
-      require("../assets/mustang_front.jpg"),
-      require("../assets/mustang_back.jpg"),
-      require("../assets/mustang_side.jpg"),
-    ],
   },
   {
     id: "12",
@@ -283,13 +228,8 @@ export const MOCK_CARS: Car[] = [
     price: 50000000,
     description:
       "O Bugatti Chiron Sport é a personificação extrema do luxo e da velocidade — um hipercarro que eleva o que é possível em performance, design e tecnologia. Com um poderoso motor W16 quadriturbo, ele entrega uma potência colossal capaz de levar o carro a velocidades que desafiam limites, tudo com uma resposta instantânea e precisão inigualável.",
-    images: [
-      require("../assets/bugatti_front.jpg"),
-      require("../assets/bugatti_side.jpg"),
-      require("../assets/bugatti_bakc.jpg"),
-    ],
   },
-   {
+  {
     id: "13",
     name: "Aston Martin Vantage",
     brand: "Aston Martin",
@@ -307,11 +247,6 @@ export const MOCK_CARS: Car[] = [
     price: 3000000,
     description:
       "O Aston Martin Vantage é a perfeita união entre elegância britânica e performance visceral. Com um motor potente — geralmente um V8 biturbo capaz de entregar uma aceleração empolgante e um som grave e cativante — o Vantage combina desempenho emocionante com uma presença marcante.",
-    images: [
-      require("../assets/aston_martin_back.jpg"),
-      require("../assets/aston_martin_side.jpg"),
-      require("../assets/aston_martin_front.jpg"),
-    ],
   },
   {
     id: "14",
@@ -331,13 +266,8 @@ export const MOCK_CARS: Car[] = [
     price: 1200000,
     description:
       "O Dodge Charger SRT Hellcat é a pura definição de muscle car americano sem desculpas — um sedã de quatro portas com um motor V8 supercharged que entrega potência monstruosa, torque avassalador e desempenho visceral desde o primeiro toque no acelerador.",
-    images: [
-      require("../assets/dodge_charger_front.jpg"),
-      require("../assets/dodge_charger_frontSide.jpg"),
-      require("../assets/dodge_charger_back.jpg"),
-    ],
   },
-   {
+  {
     id: "15",
     name: "Chevrolet Corvette C8 Stingray",
     brand: "Chevrolet",
@@ -355,13 +285,8 @@ export const MOCK_CARS: Car[] = [
     price: 1500000,
     description:
       "O Chevrolet Corvette C8 Stingray representa uma revolução na história do Corvette: um esportivo de motor central que entrega desempenho, precisão e design com uma proposta verdadeiramente emocionante. Com um potente motor V8 aspirado estrategicamente posicionado atrás do motorista, o C8 oferece acelerações vigorosas, equilíbrio dinâmico e uma experiência de condução que rivaliza com muitos carros superesportivos.",
-    images: [
-      require("../assets/corvette_front.jpg"),
-      require("../assets/corvette_side.jpg"),
-      require("../assets/corvette_back.jpg"),
-    ],
   },
-   {
+  {
     id: "16",
     name: "Ford GT",
     brand: "Ford",
@@ -379,11 +304,6 @@ export const MOCK_CARS: Car[] = [
     price: 4000000,
     description:
       "O Ford GT é a expressão máxima do desempenho e da engenharia automotiva de alto nível, projetado para ser um supercarro perfeito tanto nas pistas quanto nas ruas. Com um motor EcoBoost V6 biturbo de alta performance, aliado a uma aerodinâmica avançada inspirada nas maiores conquistas do automobilismo, o Ford GT entrega acelerações explosivas, respostas instantâneas e estabilidade impecável em velocidades extremas",
-    images: [
-      require("../assets/ford_gt_front.jpg"),
-      require("../assets/ford_gt_side.jpg"),
-      require("../assets/ford_gt_back.jpg"),
-    ],
   },
 ];
 

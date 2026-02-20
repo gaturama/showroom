@@ -15,5 +15,4 @@ export interface Car {
   weight: number;
   price: number;
   description: string;
-  images: string[] | any[];
 }
