@@ -6,16 +6,21 @@ import {
   TouchableOpacity,
   Animated,
   StatusBar,
+  ActivityIndicator,
+  Image,
+  FlatList,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
-import { CarImageCarousel } from "../components/CarCarousel";
 import { Ionicons } from "@expo/vector-icons";
 import { useFavorites } from "../components/Favorites";
 import { useTheme } from "../context/ThemeContext";
 import { useThemedStyles } from "../hooks/useThemedStyles";
 import { createStyles } from "../styles/stylesCarDetails";
 import { RatingsSection } from "../components/RatingsSection";
+import { ShareModal } from "../components/ShareModal";
+import { ImageGalleryModal } from "./ImageGalleryModal";
+import { useUnsplash } from "../context/UnsplashContext";
 
 interface SpecRowProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -29,6 +34,16 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
   const { car } = route.params;
   const { isFavorite, toggleFavorite } = useFavorites();
   const [favorites, setFavorites] = useState(isFavorite(car.id));
+  const [shareModalVisible, setShareModalVisible] = useState(false);
+  const [galleryVisible, setGalleryVisible] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const {
+    getCarImages,
+    isLoading: loadingImages,
+    refreshCarImages,
+  } = useUnsplash();
+  const [unsplashImages, setUnsplashImages] = useState<any[]>([]);
 
   const { colors } = useTheme();
   const styles = useThemedStyles(createStyles);
@@ -51,11 +66,30 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
         useNativeDriver: true,
       }),
     ]).start();
+
+    loadUnsplashImages();
   }, []);
 
   useEffect(() => {
     setFavorites(isFavorite(car.id));
   }, [car.id, isFavorite]);
+
+  const loadUnsplashImages = async () => {
+    try {
+      const images = await getCarImages(car.id, car);
+      const imageUrls = images.map((img) => ({
+        uri: img.urls.regular,
+      }));
+      setUnsplashImages(imageUrls);
+    } catch (error) {
+      console.error("Error loading Unsplash images:", error);
+    }
+  };
+
+  const handleRefreshImages = async () => {
+    await refreshCarImages(car.id, car);
+    await loadUnsplashImages();
+  };
 
   const SpecRow: React.FC<SpecRowProps> = ({ icon, label, value }) => (
     <View style={styles.specRow}>
@@ -83,6 +117,11 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
 
     toggleFavorite(car);
     setFavorites(!favorites);
+  };
+
+  const handleImagePress = (index: number) => {
+    setSelectedImageIndex(index);
+    setGalleryVisible(true);
   };
 
   return (
@@ -127,30 +166,155 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
             {car.brand}
           </Text>
 
-          <TouchableOpacity
-            onPress={handleToggleFavorite}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 12,
-              backgroundColor: colors.accentLight,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Animated.View style={{ transform: [{ scale: heartScale }] }}>
-              <Ionicons
-                name={favorites ? "heart" : "heart-outline"}
-                size={24}
-                color={favorites ? "#fff" : "#fff"}
-              />
-            </Animated.View>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", gap: 8 }}>
+            <TouchableOpacity
+              onPress={() => setShareModalVisible(true)}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 12,
+                backgroundColor: "rgba(255, 255, 255, 0.15)",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Ionicons name="share-social" size={22} color="#fff" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={handleToggleFavorite}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 12,
+                backgroundColor: colors.accentLight,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Animated.View style={{ transform: [{ scale: heartScale }] }}>
+                <Ionicons
+                  name={favorites ? "heart" : "heart-outline"}
+                  size={24}
+                  color={favorites ? "#fff" : "#fff"}
+                />
+              </Animated.View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <CarImageCarousel images={car.images} height={300} />
+        <View
+          style={{
+            height: 300,
+            backgroundColor: colors.surface,
+            position: "relative",
+          }}
+        >
+          {loadingImages ? (
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ActivityIndicator size="large" color={colors.accent} />
+              <Text
+                style={{
+                  color: colors.textSecondary,
+                  marginTop: 12,
+                  fontSize: 14,
+                }}
+              >
+                Carregando fotos do Unsplash...
+              </Text>
+            </View>
+          ) : unsplashImages.length > 0 ? (
+            <>
+              <FlatList
+                data={unsplashImages}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity
+                    activeOpacity={0.9}
+                    onPress={() => handleImagePress(index)}
+                  >
+                    <Image
+                      source={item}
+                      style={{ width: 400, height: 300 }}
+                      resizeMode="cover"
+                    />
+                  </TouchableOpacity>
+                )}
+              />
+
+              <TouchableOpacity
+                style={{
+                  position: "absolute",
+                  bottom: 16,
+                  right: 16,
+                  backgroundColor: "rgba(0, 0, 0, 0.7)",
+                  paddingHorizontal: 16,
+                  paddingVertical: 10,
+                  borderRadius: 20,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+                onPress={() => setGalleryVisible(true)}
+              >
+                <Ionicons name="images" size={20} color="#fff" />
+                <Text
+                  style={{ color: "#fff", fontWeight: "700", fontSize: 13 }}
+                >
+                  Ver todas ({unsplashImages.length})
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  position: "absolute",
+                  top: 16,
+                  right: 16,
+                  backgroundColor: "rgba(0, 0, 0, 0.7)",
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onPress={handleRefreshImages}
+              >
+                <Ionicons name="refresh" size={20} color="#fff" />
+              </TouchableOpacity>
+            </>
+          ) : (
+            <FlatList
+              data={car.images}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(_, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() => handleImagePress(index)}
+                >
+                  <Image
+                    source={item}
+                    style={{ width: 400, height: 300 }}
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
+              )}
+            />
+          )}
+        </View>
 
         <Animated.View
           style={{
@@ -213,6 +377,78 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
               </View>
             </View>
           </View>
+
+          {unsplashImages.length > 0 && (
+            <View style={styles.section}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 16,
+                }}
+              >
+                <Text style={styles.sectionTitle}>
+                  Galeria ({unsplashImages.length} fotos)
+                </Text>
+                <TouchableOpacity onPress={() => setGalleryVisible(true)}>
+                  <Text
+                    style={{
+                      color: colors.accent,
+                      fontSize: 14,
+                      fontWeight: "600",
+                    }}
+                  >
+                    Ver todas →
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+                {unsplashImages.slice(0, 6).map((image, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={{
+                      width: "48%",
+                      height: 150,
+                      borderRadius: 12,
+                      overflow: "hidden",
+                    }}
+                    onPress={() => handleImagePress(index)}
+                  >
+                    <Image
+                      source={image}
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                    {index === 5 && unsplashImages.length > 6 && (
+                      <View
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          backgroundColor: "rgba(0, 0, 0, 0.6)",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "#fff",
+                            fontSize: 28,
+                            fontWeight: "700",
+                          }}
+                        >
+                          +{unsplashImages.length - 6}
+                        </Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          )}
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Especificações Técnicas</Text>
@@ -278,18 +514,51 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
             <RatingsSection car={car} />
           </View>
 
-          <TouchableOpacity
-            style={styles.actionContainer}
-            activeOpacity={0.8}
-            onPress={() => console.log("Contato")}
-          >
-            <Ionicons name="logo-whatsapp" size={24} color="#fff" />
-            <Text style={styles.actionButtonText}>Entrar em Contato</Text>
-          </TouchableOpacity>
+          <View style={styles.actionsRow}>
+            <TouchableOpacity
+              style={[styles.actionButton, { flex: 1 }]}
+              activeOpacity={0.8}
+              onPress={() => setShareModalVisible(true)}
+            >
+              <Ionicons name="share-social" size={20} color="#fff" />
+              <Text style={styles.actionButtonText}>Compartilhar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.actionButton, { flex: 1.5 }]}
+              activeOpacity={0.8}
+              onPress={() => console.log("Contato WhatsApp")}
+            >
+              <Ionicons name="logo-whatsapp" size={20} color="#fff" />
+              <Text style={styles.actionButtonText}>Entrar em Contato</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Créditos Unsplash */}
+          {unsplashImages.length > 0 && (
+            <View style={{ padding: 16, alignItems: "center" }}>
+              <Text style={{ fontSize: 11, color: colors.textTertiary }}>
+                📸 Fotos por <Text style={{ fontWeight: "700" }}>Unsplash</Text>
+              </Text>
+            </View>
+          )}
 
           <View style={styles.bottomSpacing} />
         </Animated.View>
       </ScrollView>
+
+      <ShareModal
+        visible={shareModalVisible}
+        onClose={() => setShareModalVisible(false)}
+        car={car}
+      />
+
+      <ImageGalleryModal
+        visible={galleryVisible}
+        images={unsplashImages.length > 0 ? unsplashImages : car.images}
+        initialIndex={selectedImageIndex}
+        onClose={() => setGalleryVisible(false)}
+      />
     </View>
   );
 }
