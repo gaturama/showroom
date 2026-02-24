@@ -11,4 +11,5 @@ export type RootStackParamList = {
     Favorites: undefined;
     Compare: undefined;
     History: undefined;
+    NotificationSettings: undefined;
 };
