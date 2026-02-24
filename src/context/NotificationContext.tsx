@@ -8,7 +8,7 @@ import {
   cancelAllNotifications,
   setBadgeCount,
   clearBadge,
-} from '../service/NotificationService'; 
+} from '../service/NotificationService';  
 
 interface NotificationContextData {
   expoPushToken: string | undefined;
@@ -33,8 +33,8 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
   const [notificationPermissionGranted, setNotificationPermissionGranted] = useState(false);
   const [badgeCount, setBadgeCountState] = useState(0);
 
-  const notificationListener = useRef<Notifications.Subscription>();
-  const responseListener = useRef<Notifications.Subscription>();
+  const notificationListener = useRef<Notifications.EventSubscription | undefined>(undefined);
+  const responseListener = useRef<Notifications.EventSubscription | undefined>(undefined);
 
   useEffect(() => {
     registerForPushNotificationsAsync()
@@ -47,13 +47,13 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
       });
 
     notificationListener.current = addNotificationReceivedListener(notification => {
-      console.log('📬 Notificação recebida:', notification);
+      console.log('Notificação recebida:', notification);
       setNotification(notification);
       incrementBadge();
     });
 
     responseListener.current = addNotificationResponseReceivedListener(response => {
-      console.log('👆 Notificação clicada:', response);
+      console.log('Notificação clicada:', response);
       
       const data = response.notification.request.content.data;
       
@@ -62,13 +62,12 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
       resetBadge();
     });
 
-    // Cleanup
     return () => {
       if (notificationListener.current) {
-        Notifications.removeNotificationSubscription(notificationListener.current);  
+        notificationListener.current.remove();
       }
       if (responseListener.current) {
-        Notifications.removeNotificationSubscription(responseListener.current);  
+        responseListener.current.remove();
       }
     };
   }, []);
@@ -94,7 +93,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 
   const sendTestNotification = async () => {
     await scheduleLocalNotification(
-      '🚗 Notificação de Teste',
+      'Notificação de Teste',
       'Esta é uma notificação de teste do JMS Car Showroom!',
       { type: 'test' },
       2 
