@@ -88,7 +88,7 @@ export default function App() {
                         component={HistoryScreen}
                         options={{ headerShown: false }}
                       />
-                      <Stack.Screen 
+                      <Stack.Screen
                         name="NotificationSettings"
                         component={NotificationSettingsScreen}
                         options={{ headerShown: false }}

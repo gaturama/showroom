@@ -218,7 +218,6 @@ export default function HomeScreen({ navigation }: Props) {
           )}
         </TouchableOpacity>
 
-        {/* Botão de Comparação */}
         <TouchableOpacity
           style={styles.compareButton}
           onPress={() => navigation.navigate("Compare")}

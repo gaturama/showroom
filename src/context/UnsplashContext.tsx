@@ -18,7 +18,7 @@ interface UnsplashContextData {
 const UnsplashContext = createContext<UnsplashContextData>({} as UnsplashContextData);
 
 const STORAGE_KEY = '@CarShowroom:unsplashImages';
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 horas
+const CACHE_DURATION = 24 * 60 * 60 * 1000; 
 
 interface UnsplashProviderProps {
   children: ReactNode;
@@ -61,11 +61,9 @@ export const UnsplashProvider: React.FC<UnsplashProviderProps> = ({ children }) 
   const getCarImages = async (carId: string, carQuery: any): Promise<UnsplashImage[]> => {
     const cached = imagesCache[carId];
     if (cached && isCacheValid(cached.lastFetched)) {
-      console.log(`📸 Using cached images for ${carId}`);
       return cached.images;
     }
 
-    console.log(`🔍 Fetching images from Unsplash for ${carId}`);
     setIsLoading(true);
 
     try {

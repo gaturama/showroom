@@ -57,7 +57,6 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
     });
   };
 
-  // Determinar ícone e cor baseado no título
   const getIconAndColor = () => {
     const lowerTitle = title.toLowerCase();
 
@@ -100,7 +99,6 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
             },
           ]}
         >
-          {/* Ícone no topo */}
           <View
             style={{
               width: 64,

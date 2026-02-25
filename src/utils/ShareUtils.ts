@@ -91,7 +91,6 @@ export const shareToWhatsApp = (car: Car): string => {
   if (Platform.OS === 'ios') {
     return `whatsapp://send?text=${encodedMessage}`;
   } else {
-    // Android: usar API do WhatsApp
     return `https://wa.me/?text=${encodedMessage}`;
   }
 };

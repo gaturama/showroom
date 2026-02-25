@@ -176,7 +176,6 @@ export async function notifyComparisonReady(car1: string, car2: string) {
  * Notificações agendadas (daily, weekly)
  */
 export async function scheduleDailyNotification() {
-  // ✅ Cancelar apenas a notificação diária anterior (se existir)
   const existingId = await AsyncStorage.getItem(DAILY_NOTIFICATION_ID);
   if (existingId) {
     await Notifications.cancelScheduledNotificationAsync(existingId);

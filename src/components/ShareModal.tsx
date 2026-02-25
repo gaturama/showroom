@@ -43,7 +43,6 @@ export const ShareModal: React.FC<ShareModalProps> = ({ visible, onClose, car })
       const text = formatCarSpecs(car);
       const encodedText = encodeURIComponent(text);
       
-      // Lista de URLs para tentar (em ordem de prioridade)
       const whatsappUrls = [
         `whatsapp://send?text=${encodedText}`,          
         `https://wa.me/?text=${encodedText}`,             

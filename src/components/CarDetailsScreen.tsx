@@ -93,7 +93,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
       }
     } catch (error) {
       console.error("Error loading Unsplash images:", error);
-      setHasLoadedImages(true); 
+      setHasLoadedImages(true);
     }
   };
 
