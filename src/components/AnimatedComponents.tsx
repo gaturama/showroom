@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, ViewStyle, TextStyle } from "react-native";
-import * as Animations from "../utils/animations";
+import * as Animations from "../utils/Animations";
 
 /**
  * Componentes Animados Prontos para Usar

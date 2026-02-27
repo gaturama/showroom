@@ -12,4 +12,5 @@ export type RootStackParamList = {
     Compare: undefined;
     History: undefined;
     NotificationSettings: undefined;
+    Stats: undefined
 };

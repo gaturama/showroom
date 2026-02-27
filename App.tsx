@@ -20,6 +20,8 @@ import { ViewHistoryProvider } from "./src/context/ViewHistoryContext";
 import HistoryScreen from "./src/screens/HistoryScreen";
 import { NotificationProvider } from "./src/context/NotificationContext";
 import NotificationSettingsScreen from "./src/screens/NotificationSettingsScreen";
+import { StatsProvider } from "./src/context/StatsContext";
+import StatsScreen from "./src/screens/StatsScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -42,59 +44,65 @@ export default function App() {
             <UnsplashProvider>
               <ViewHistoryProvider>
                 <NotificationProvider>
-                  <NavigationContainer>
-                    <Stack.Navigator
-                      initialRouteName="Login"
-                      screenOptions={{ animation: "fade" }}
-                      id={undefined}
-                    >
-                      <Stack.Screen
-                        name="Login"
-                        component={LoginScreen}
-                        options={{ headerShown: false }}
-                      />
-                      <Stack.Screen
-                        name="Register"
-                        component={RegisterScreen}
-                        options={{ headerShown: false }}
-                      />
-                      <Stack.Screen
-                        name="Home"
-                        component={HomeScreen}
-                        options={{ headerShown: false }}
-                      />
-                      <Stack.Screen
-                        name="Profile"
-                        component={ProfileScreen}
-                        options={{ headerShown: false }}
-                      />
-                      <Stack.Screen
-                        name="CarDetails"
-                        component={CarDetailsScreen}
-                        options={{ headerShown: false }}
-                      />
-                      <Stack.Screen
-                        name="Favorites"
-                        component={FavoritesScreen}
-                        options={{ headerShown: false }}
-                      />
-                      <Stack.Screen
-                        name="Compare"
-                        component={CompareScreen}
-                        options={{ headerShown: false }}
-                      />
-                      <Stack.Screen
-                        name="History"
-                        component={HistoryScreen}
-                        options={{ headerShown: false }}
-                      />
-                      <Stack.Screen
-                        name="NotificationSettings"
-                        component={NotificationSettingsScreen}
-                        options={{ headerShown: false }}
-                      />
-                    </Stack.Navigator>
-                  </NavigationContainer>
+                  <StatsProvider>
+                    <NavigationContainer>
+                      <Stack.Navigator
+                        initialRouteName="Login"
+                        screenOptions={{ animation: "fade" }}
+                        id={undefined}
+                      >
+                        <Stack.Screen
+                          name="Login"
+                          component={LoginScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="Register"
+                          component={RegisterScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="Home"
+                          component={HomeScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="Profile"
+                          component={ProfileScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="CarDetails"
+                          component={CarDetailsScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="Favorites"
+                          component={FavoritesScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="Compare"
+                          component={CompareScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="History"
+                          component={HistoryScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                          name="NotificationSettings"
+                          component={NotificationSettingsScreen}
+                          options={{ headerShown: false }}
+                        />
+                        <Stack.Screen 
+                          name="Stats"
+                          component={StatsScreen}
+                        />
+                      </Stack.Navigator>
+                    </NavigationContainer>
+                  </StatsProvider>
                 </NotificationProvider>
               </ViewHistoryProvider>
             </UnsplashProvider>

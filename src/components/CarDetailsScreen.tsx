@@ -22,6 +22,7 @@ import { ShareModal } from "../components/ShareModal";
 import { ImageGalleryModal } from "../components/ImageGalleryModal";
 import { useUnsplash } from "../context/UnsplashContext";
 import { useViewHistory } from "../context/ViewHistoryContext";
+import { useStats } from "../context/StatsContext";
 
 interface SpecRowProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -39,6 +40,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { addToHistory } = useViewHistory();
+  const { recordCarView, recordFavorite, recordShare } = useStats();
 
   const {
     getCarImages,
@@ -79,6 +81,10 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     addToHistory(car);
+  }, [car.id]);
+
+  useEffect(() => {
+    recordCarView(car.id);
   }, [car.id]);
 
   const loadUnsplashImages = async () => {
@@ -130,8 +136,15 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
       }),
     ]).start();
 
+    const isAdding = !favorites;
     toggleFavorite(car);
-    setFavorites(!favorites);
+    setFavorites(isAdding);
+    recordFavorite(car.id, isAdding);
+  };
+
+  const handleShare = () => {
+    setShareModalVisible(true);
+    recordShare();
   };
 
   const handleImagePress = (index: number) => {
@@ -183,7 +196,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
 
           <View style={{ flexDirection: "row", gap: 8 }}>
             <TouchableOpacity
-              onPress={() => setShareModalVisible(true)}
+              onPress={handleShare}
               style={{
                 width: 40,
                 height: 40,
@@ -211,7 +224,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
                 <Ionicons
                   name={favorites ? "heart" : "heart-outline"}
                   size={24}
-                  color={favorites ? "#fff" : "#fff"}
+                  color="#fff"
                 />
               </Animated.View>
             </TouchableOpacity>
@@ -560,7 +573,7 @@ export default function CarDetailsScreen({ navigation, route }: Props) {
             <TouchableOpacity
               style={[styles.actionButton, { flex: 1 }]}
               activeOpacity={0.8}
-              onPress={() => setShareModalVisible(true)}
+              onPress={handleShare}
             >
               <Ionicons name="share-social" size={20} color="#fff" />
               <Text style={styles.actionButtonText}>Compartilhar</Text>
